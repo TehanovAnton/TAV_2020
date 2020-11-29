@@ -1,15 +1,8 @@
 defF IntT fi(IntT x, IntT y)
-	def IntT e = 1 + y
-	def BoolT w
-	w = 1 >= 2
-	w = 1 <= 2
-	w = 1 == 2
-	w = 1 > 2
-	w = 1 < 2
-	w = 2
-	IF()
-	end
-	RIF()	
+	defF IntT la(IntT x, IntT y)
+	RIF(la(x, y) > 2)
+	 def IntT l = 3
+	 put l
 	end
 	def IntT j = 1
 	def IntT l = 1

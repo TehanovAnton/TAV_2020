@@ -1,8 +1,8 @@
 #include"GRB.h"
 
-namespace GRB
+namespace GRB				// S N E M F W
 {
-	//S -> fm; NrE; e | fti(F); NrE; e; S | fm; NrE; e; S | tfi(F) { NrE; };
+	//S -> fm; NrE; e | fti(F); NrE; e; S | fm; NrE; e; S | * tfi(F) { NrE; };
 	Greibach greibach(
 		NS('S'),										 // стартовый символ
 		TS('$'),										 // дно стека
@@ -13,12 +13,14 @@ namespace GRB
 			Rule::Chain(14, TS('f'), TS('t'), TS('i'), TS('('), NS('F'), TS(')'), TS(';'), NS('N'), TS('r'), NS('E'), TS(';'), TS('e'), TS(';'), NS('S')),
 			Rule::Chain(9, TS('f'), TS('m'), TS(';'), NS('N'), TS('r'), NS('E'), TS(';'), TS('e'), TS(';'), NS('S'))
 			//Rule::Chain(13, TS('t'), TS('f'), TS('i'), TS('('), NS('F'), TS(')'), TS('{'), NS('N'), TS('r'), NS('E'), TS(';'), TS('}'), TS(';'))
-		),
+		),																					   
 		/* N -> dti(F); | dti(F); N | dti = E; | dti = E; N | dti; N | dti; | rE; N | rE; | i = E; N | i = E; | dtfi(F); N | dtfi(F);
 		   | pE; | pE; N |
+		   a(E); N e; | a(E); N e; N |					 // условный опрератор
+		   b(E); N e; | b(E); N e; N					 // опрератор цикла
 		*/
 		Rule(NS('N'), GRB__ERROR_SERIES + 1,			 // ошибочный опрератор
-			12,
+			16,
 			//Rule::Chain(7, TS('d'), TS('t'), TS('i'), TS('('), NS('F'), TS(')'), TS(';')),
 			//Rule::Chain(8, TS('d'), TS('t'), TS('i'), TS('('), NS('F'), TS(')'), TS(';'), NS('N')),
 			Rule::Chain(6, TS('d'), TS('t'), TS('i'), TS('='), NS('E'), TS(';')),
@@ -32,7 +34,11 @@ namespace GRB
 			Rule::Chain(8, TS('f'), TS('t'), TS('i'), TS('('), NS('F'), TS(')'), TS(';'), NS('N')),
 			Rule::Chain(7, TS('f'), TS('t'), TS('i'), TS('('), NS('F'), TS(')'), TS(';')),
 			Rule::Chain(4, TS('p'), NS('E'), TS(';'), NS('N')),
-			Rule::Chain(3, TS('p'), NS('E'), TS(';'))
+			Rule::Chain(3, TS('p'), NS('E'), TS(';')),
+			Rule::Chain(9, TS('a'), TS('('), NS('E'), TS(')'), TS(';'), NS('N'), TS('e'), TS(';'), NS('N')),
+			Rule::Chain(8, TS('a'), TS('('), NS('E'), TS(')'), TS(';'), NS('N'), TS('e'), TS(';')),
+			Rule::Chain(9, TS('b'), TS('('), NS('E'), TS(')'), TS(';'), NS('N'), TS('e'), TS(';'), NS('N')),
+			Rule::Chain(8, TS('b'), TS('('), NS('E'), TS(')'), TS(';'), NS('N'), TS('e'), TS(';'))
 		),
 		//E -> i | l | (E) | i(W) | iM | lM | (E)M | i(W)M
 		Rule(NS('E'), GRB__ERROR_SERIES + 2,
