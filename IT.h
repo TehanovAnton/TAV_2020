@@ -34,7 +34,7 @@ namespace IT
 
     struct Entry                        // строка таблийцы идентификаторов 
     {
-        int idxfirstLE;                 // индекс строки в таблице лексем
+        int idxfirstLE;                 // индекс в таблице лексем
         char id[ID_MAXSIZE];            // идентификато(автоматически усекается до ID_MAXSIZE)
         IDDATATYPE iddatatype;          // тип данных
         IDTYPE idtype;                  // тип идентификаторов

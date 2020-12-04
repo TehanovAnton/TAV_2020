@@ -1,6 +1,8 @@
 defF IntT func(IntT e)
-ret e	end
+  ret e	
+end
+
 defF StartPoint
-func(1)
-ret 0
+ func(1)
+ ret 0
 end

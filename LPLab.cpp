@@ -1,6 +1,7 @@
 ﻿#include"LPLab.h"
 #include "PolishNotation.h"
 #include"MFST.h"
+#include"Semantics.h"
 
 #define LPLab 1	
 int _tmain(int argc, _TCHAR* argv[])
@@ -57,12 +58,17 @@ int _tmain(int argc, _TCHAR* argv[])
 		std::cout << "\n\n\n";*/
 
 		////LPLab16
-		MFST_TRACE_START											   // отладка
-		MFST::Mfst mfst(lexTable, GRB::getGreibach());			   // автомат
-		mfst.start();												   // старт синтаксического анализа
+		//MFST_TRACE_START											   // отладка
+		//MFST::Mfst mfst(lexTable, GRB::getGreibach());			   // автомат
+		//mfst.start();												   // старт синтаксического анализа
 
 		////LPLab15
 		ChangeLTWithPN(lexTable, idTable);
+
+		// сематниеский анализ
+		SMTCS::Semantics smtcs(lexTable, idTable);
+		std::cout << smtcs.CheckOperatoinsSemantics() << "\n";
+		std::cout << smtcs.CheckFunctionSemantics() << "\n\n";
 
 		////вывод LT
 		lexTable.PrintTable();

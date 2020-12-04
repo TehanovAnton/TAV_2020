@@ -14,8 +14,8 @@
 #define Operations_Brackets "+-*/<>ghc()[]"
 #define Operations "+-*/"
 #define prior_1 {'(', 1}, {')', 1}, {'[', 1}, {']', 1}
-#define prior_2 {LEX_PLUS, 2}, {LEX_MINUS, 2}, {LEX_BOOLEAQUl_OPER_V, 2}, {LEX_LESSEQ_OPER_V, 2}, {LEX_MOREEQ_OPER_V, 2}, {LEX_MORE, 2}, {LEX_LESS, 2}
-#define prior_3 {LEX_STAR, 3}, {LEX_DIRSLASH, 3}
+#define prior_2 {'+', 2}, {'-', 2}, {LEX_BOOLEAQUl_OPER_V, 2}, {LEX_LESSEQ_OPER_V, 2}, {LEX_MOREEQ_OPER_V, 2}, {'>', 2}, {'<', 2}
+#define prior_3 {'*', 3}, {'/', 3}
 									 
 namespace PN // PolishNotation
 {

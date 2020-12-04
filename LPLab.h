@@ -136,7 +136,7 @@ bool FillIT(LT::LexTable& lexTable, IT::IdTable& idTable, IT::Entry& entryI, int
 		lexTable.table[lexTable.size - 1].idxTI = idTable.size;
 	}
 	// литерал
-	else if (currentToken == 4 || currentToken == 5 || currentToken == 11 || currentToken == 10)
+	else if (currentToken == 4 || currentToken == 5 || currentToken == 11 || currentToken == 12)
 	{
 		if (currentToken == 5) // IntT literal
 		{
@@ -155,7 +155,7 @@ bool FillIT(LT::LexTable& lexTable, IT::IdTable& idTable, IT::Entry& entryI, int
 				lexTable.table[lexTable.size - 1].idxTI = idTable.size;
 			}
 		}
-		else if (currentToken == 11)							 // BoolT - false
+		else if (currentToken == 12)							 // BoolT - false
 		{
 			// найден BoolT - false
 			if (IT::IstdBoolTLitByValue(idTable, TI_FALSE_VAl) != (int)TI_NULLIDX)
@@ -172,7 +172,7 @@ bool FillIT(LT::LexTable& lexTable, IT::IdTable& idTable, IT::Entry& entryI, int
 				lexTable.table[lexTable.size - 1].idxTI = idTable.size;
 			}
 		}
-		else if (currentToken == 10)						 // BoolT - true
+		else if (currentToken == 11)						 // BoolT - true
 		{				  
 			// найден BoolT - true
 			if (IT::IstdBoolTLitByValue(idTable, TI_TRUE_VAL) != (int)TI_NULLIDX)
@@ -479,7 +479,7 @@ void LTITBuilding(LT::LexTable& lexTable, IT::IdTable& idTable, std::string orif
 					isSymInStr(orifginalStr[i], moreLessEqual) && orifginalStr[i + 1] == LEX_EQUAl ? i++, lexemLng : lexemShrt,
 					lexTable, idTable, entryL, entryI, lexTable.positions[lexCounter++].line, litCounter, lastToken, preLastToken, lexCounter);
 
-				if (orifginalStr[i] == LEX_EQUAl)
+				if (orifginalStr[i] == LEX_EQUAl && orifginalStr[i + 1] != LEX_EQUAl && orifginalStr[i - 1] != LEX_EQUAl)
 					lexTable.posLEX_EQUALS[lexTable.posLEX_EQUALSSize++] = lexTable.size - 1;
 
 				//// обработка односимвольных разделителей

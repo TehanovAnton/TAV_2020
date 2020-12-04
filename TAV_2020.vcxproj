@@ -30,6 +30,7 @@
     <ClCompile Include="MFST.cpp" />
     <ClCompile Include="Parm.cpp" />
     <ClCompile Include="PolishNotation.cpp" />
+    <ClCompile Include="Semantics.cpp" />
     <ClCompile Include="SpecialSym.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -44,6 +45,7 @@
     <ClInclude Include="MFST.h" />
     <ClInclude Include="Parm.h" />
     <ClInclude Include="PolishNotation.h" />
+    <ClInclude Include="Semantics.h" />
     <ClInclude Include="SpecialSym.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -544,10 +544,10 @@ namespace PN
 						stck.pop();
 				}
 				// в верщине стека и строки опрерация 
-				else if (isSymInStr(lex, Operations) && isSymInStr(stck.top().lexema[0], Operations))
+				else if (isSymInStr(lex, Operations) && isSymInStr(stck.top().oper_v, Operations))
 				{
 					// операция выталкивает из стека операцию с большим либо равным приоритетом
-					if (GetPrioryty(lex, prioryties) <= GetPrioryty(stck.top().lexema[0], prioryties))
+					if (GetPrioryty(lex, prioryties) <= GetPrioryty(stck.top().oper_v, prioryties))
 					{
 						res.Addpnstr(stck.top(), idTable, res.size++, i);
 						stck.pop();
