@@ -65,13 +65,14 @@ int _tmain(int argc, _TCHAR* argv[])
 		////LPLab15
 		ChangeLTWithPN(lexTable, idTable);
 
-		// сематниеский анализ
-		SMTCS::Semantics smtcs(lexTable, idTable);
-		std::cout << smtcs.CheckOperatoinsSemantics() << "\n";
-		std::cout << smtcs.CheckFunctionSemantics() << "\n\n";
-
 		////вывод LT
 		lexTable.PrintTable();
+		std::cout << "\n\n";
+
+		// сематниеский анализ
+		SMTCS::Semantics smtcs(lexTable, idTable);
+		smtcs.CheckOperatoinsSemantics();
+		smtcs.CheckFunctionSemantics();
 
 		//вывод IT
 		idTable.PrintTable();

@@ -1,6 +1,8 @@
 defF IntT func(IntT e)
-ret e	end
+e=e+7/5-2
+ret e
+end
 defF StartPoint
-func(1)
+def IntT e=1+'e'
 ret 0
 end

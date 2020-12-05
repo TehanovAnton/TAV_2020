@@ -12,7 +12,7 @@
 
 #define SymWithPriorytyAmount 13
 #define Operations_Brackets "+-*/<>ghc()[]"
-#define Operations "+-*/"
+#define Operations "+-*/<>ghc"
 #define prior_1 {'(', 1}, {')', 1}, {'[', 1}, {']', 1}
 #define prior_2 {'+', 2}, {'-', 2}, {LEX_BOOLEAQUl_OPER_V, 2}, {LEX_LESSEQ_OPER_V, 2}, {LEX_MOREEQ_OPER_V, 2}, {'>', 2}, {'<', 2}
 #define prior_3 {'*', 3}, {'/', 3}

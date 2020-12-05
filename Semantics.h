@@ -5,13 +5,13 @@
 
 #define MAXTYPENUMBER 3
 #define OPERNUM 9
-#define ARITHMETICOPER  {'+', 2, IT::IDDATATYPE::INT, IT::IDDATATYPE::STR}, \
-						{'-', 2, IT::IDDATATYPE::INT, IT::IDDATATYPE::STR}, \
-						{'*', 1, IT::IDDATATYPE::INT}, { '/', 1, IT::IDDATATYPE::INT } \
+#define ARITHMETICOPER  {IT::IDDATATYPE::INT, '+', 2, IT::IDDATATYPE::INT, IT::IDDATATYPE::STR}, \
+						{IT::IDDATATYPE::INT, '-', 2, IT::IDDATATYPE::INT, IT::IDDATATYPE::STR}, \
+						{IT::IDDATATYPE::INT, '*', 1, IT::IDDATATYPE::INT}, {IT::IDDATATYPE::INT, '/', 1, IT::IDDATATYPE::INT } \
 
-#define BOOLEANOPER  {'>', 1, IT::IDDATATYPE::INT}, {'<', 1, IT::IDDATATYPE::INT},	\
-					{LEX_MOREEQ_OPER_V, 1, IT::IDDATATYPE::INT}, { LEX_LESSEQ_OPER_V, 1, IT::IDDATATYPE::INT }, \
-					{ LEX_BOOLEAQUl_OPER_V, 3, IT::IDDATATYPE::INT, IT::IDDATATYPE::BOOL, IT::IDDATATYPE::STR }	\
+#define BOOLEANOPER  {IT::IDDATATYPE::BOOL , '>', 1, IT::IDDATATYPE::INT}, {IT::IDDATATYPE::BOOL, '<', 1, IT::IDDATATYPE::INT},	\
+					{IT::IDDATATYPE::INT, LEX_MOREEQ_OPER_V, 1, IT::IDDATATYPE::INT}, { IT::IDDATATYPE::BOOL, LEX_LESSEQ_OPER_V, 1, IT::IDDATATYPE::INT }, \
+					{ IT::IDDATATYPE::BOOL, LEX_BOOLEAQUl_OPER_V, 3, IT::IDDATATYPE::INT, IT::IDDATATYPE::BOOL, IT::IDDATATYPE::STR }	\
 
 namespace SMTCS
 {
@@ -19,9 +19,10 @@ namespace SMTCS
 	{
 		char operation;
 		IT::IDDATATYPE parmTypes[MAXTYPENUMBER];
+		IT::IDDATATYPE retType;
 		int countTypes;
 
-		OperatioWithTypes(char oper, int pcountTypes, IT::IDDATATYPE types, ...);
+		OperatioWithTypes(IT::IDDATATYPE pretType, char oper, int pcountTypes, IT::IDDATATYPE types, ...);
 	};
 
 	struct Semantics
@@ -36,7 +37,9 @@ namespace SMTCS
 		}
 
 		bool start();
-		bool CheckOperatoinsSemantics();
-		bool CheckFunctionSemantics();
+		void CheckOperatoinsSemantics();
+		void CheckFunctionSemantics();
+		void CheckIF_RIF_Semantics();
+		bool CheckIdUsageAtLeasOnce();
 	};
 }

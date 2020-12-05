@@ -45,6 +45,7 @@
 #include "Error.h"
 #include<iostream>
 #include<string>
+#include<queue>
 
 bool isSymInStr(char sym, const char str[]);
 
@@ -78,8 +79,11 @@ namespace LT							// таблица лексем
 		Entry* table;					// массив строк таблицы лексем
 		int posSize;
 		Position* positions;				// массив положений лексем
+
 		int posLEX_EQUALSSize;
 		int* posLEX_EQUALS;
+
+		std::queue<int>posLEX_IF_RIF;		// очередь положений IF и RIF
 
 		void GetLexemsPosition(std::string  originalText);		// функция заполняет принемает текст исходной и заполняет массив положежний
 		void PrintTable();										// вывод таблицы

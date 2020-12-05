@@ -59,7 +59,13 @@ namespace LT
 		else
 		{
 			lextable.table[lextable.size] = entry;
+			// заполнение очереди положений IF, RIF
+			if (entry.lexema[0] == LEX_IF || entry.lexema[0] == LEX_RIF)
+			{
+				lextable.posLEX_IF_RIF.push(lextable.size);
+			}
 			lextable.size++;
+
 			entry = LT::Entry();
 		}
 	}
