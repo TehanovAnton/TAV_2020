@@ -50,10 +50,6 @@ namespace PN // PolishNotation
 
 	int GetPrioryty(char sym, SymWithPrioryty prior[]);
 
-	void parseFunctoPnstr(char origStr[], PNstr& res, int& i, std::stack<char>& stck, SymWithPrioryty prioryties[]);
-	void parseArrtoPnstr(char origStr[], PNstr& res, int& i, std::stack<char>& stck, SymWithPrioryty prioryties[]);
-	bool PolishNotation(int expressionStart, char origStr[]);
-
 	void parseFunctoPnstrLT(LT::LexTable& lexTable, IT::IdTable& idTable, PNLTstr& res, int& i, std::stack<LT::Entry>& stck, SymWithPrioryty prioryties[]);
 	void parseArrtoPnstrLT(LT::LexTable& lexTable, IT::IdTable& idTable, PNLTstr& res, int& i, std::stack<LT::Entry>& stck, SymWithPrioryty prioryties[]);
 	bool PolishNotation(int exprStart, LT::LexTable& lexTable, IT::IdTable& idTable, int& countEmptyEl);

@@ -26,6 +26,7 @@ void setDefValue(IT::Entry& entryI)
 		entryI.values.vste->str[0] = '\0';
 	}
 }
+
 void setEntryIId(IT::Entry& entryI, char lexem[])
 {
 	size_t i = 0;
@@ -68,6 +69,7 @@ bool strcamper(char idtableEl[], char findingEl[])
 
 	return res;
 }
+
 bool strcamper(char idtableEl[], const char* findingEl)
 {
 	bool res = true;
@@ -480,22 +482,7 @@ void LTITBuilding(LT::LexTable& lexTable, IT::IdTable& idTable, std::string orif
 					lexTable, idTable, entryL, entryI, lexTable.positions[lexCounter++].line, litCounter, lastToken, preLastToken, lexCounter);
 
 				if (orifginalStr[i] == LEX_EQUAl && orifginalStr[i + 1] != LEX_EQUAl && orifginalStr[i - 1] != LEX_EQUAl)
-					lexTable.posLEX_EQUALS[lexTable.posLEX_EQUALSSize++] = lexTable.size - 1;
-
-				//// обработка односимвольных разделителей
-				//if (orifginalStr[i + 1] != LEX_EQUAl)
-				//{
-				//	parsingLexem(lexemShrt, lexTable, idTable, entryL, entryI, lexTable.positions[lexCounter++].line, litCounter, lastToken, preLastToken, lexCounter);
-
-				//	if (orifginalStr[i] == LEX_EQUAl)
-				//		lexTable.posLEX_EQUALS[lexTable.posLEX_EQUALSSize++] = lexTable.size - 1;
-				//}
-				//// обработка разделителей соостоящих из 2ух символов
-				//else if (isSymInStr(orifginalStr[i], moreLessEqual))
-				//{
-				//	parsingLexem(lexemLng, lexTable, idTable, entryL, entryI, lexTable.positions[lexCounter++].line, litCounter, lastToken, preLastToken, lexCounter);
-				//	i++;
-				//}				
+					lexTable.posLEX_EQUALS[lexTable.posLEX_EQUALSSize++] = lexTable.size - 1;								
 			}
 
 			//сброс конца строки
@@ -641,11 +628,15 @@ void ChangeLTWithPN(LT::LexTable& lexTable, IT::IdTable& idTable)
 	}
 	// исключение пустых элементов
 	LT::Entry* cleanTable = new  LT::Entry[lexTable.size - countEmptyEl];
-	for (int i = 0, e = 0; i < lexTable.size; i++)
+	for (int i = 0, e = 0, poseqindx = 0; i < lexTable.size; i++)
 	{
 		if (lexTable.table[i].lexema[0] != EMPTYSTR)
 		{
 			cleanTable[e++] = lexTable.table[i];
+
+			// пересчёт позиций знака равно
+			if (cleanTable[e - 1].lexema[0] == LEX_EQUAl)
+				lexTable.posLEX_EQUALS[poseqindx++] = e - 1;
 		}
 		else
 		{

@@ -26,7 +26,7 @@ namespace LT
 	{
 		lexema[0] = shortLexm;
 		lexema[1] = '\0';
-		oper_v = shortLexm == 'v' ? origlex : '\0';
+		oper_v = IsOperation(shortLexm) ? origlex : '\0';
 		sn = line;
 		cn = 0;		// определяется в GetLexPositions
 		idxTI = idxti;
@@ -113,6 +113,11 @@ namespace LT
 		return false;
 	}
 
+	bool IsOperation(char shrtlex)
+	{
+		return shrtlex == 'v' || shrtlex == 'w';
+	}
+
 	void LexTable::GetLexemsPosition(std::string originalText)
 	{
 		char longLexem[TI_STR_MAXSIZE];
@@ -180,7 +185,7 @@ namespace LT
 		{
 			if (this->table[i].lexema[0] != '\0')
 			{
-				if (table[i].lexema[0] == 'v')
+				if (IsOperation(table[i].lexema[0]))
 					std::cout << table[i].oper_v;
 				else
 				{

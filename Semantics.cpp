@@ -2,9 +2,6 @@
 
 namespace SMTCS
 {
-	// массив операций и поддерживаемых типов
-	OperatioWithTypes operTypes[OPERNUM] = { ARITHMETICOPER, BOOLEANOPER };
-
 	OperatioWithTypes::OperatioWithTypes(IT::IDDATATYPE pretType, char oper, int pcountTypes, IT::IDDATATYPE types, ...)
 	{
 		operation = oper;
@@ -22,8 +19,8 @@ namespace SMTCS
 		return false;
 	}
 
-	// проверка на раваенство операндов по типу данных
-	bool Check_I_DataTypes(LT::LexTable lexTable, IT::IdTable idTable, int strtIndx)
+	// проверка на раваенство операндов по типу данных в выражениях
+	bool Semantics::Check_I_DataTypes(int strtIndx)
 	{
 		IT::IDDATATYPE iddatatype = idTable.table[lexTable.table[strtIndx + 1].idxTI].iddatatype;
 		for (int i = ++strtIndx; lexTable.table[i].lexema[0] != LEX_SEMICOLON; i++)
@@ -41,7 +38,7 @@ namespace SMTCS
 	}
 
 	// проверка на раваенство операндов по типу данных переданному типу
-	bool Check_I_DataTypes(LT::LexTable lexTable, IT::IdTable idTable, IT::IDDATATYPE type, char seprtr, int strtIndx)
+	bool Semantics::Check_I_DataTypes(IT::IDDATATYPE type, char seprtr, int strtIndx)
 	{
 		for (int i = ++strtIndx; lexTable.table[i].lexema[0] != seprtr; i++)
 		{
@@ -58,9 +55,8 @@ namespace SMTCS
 	}
 
 	// поддерживает ли опреация тип
-	bool IsTyperInOper(OperatioWithTypes operTypes[], IT::IDDATATYPE iddatatype, char oper)
+	bool Semantics::IsTyperInOper(OperatioWithTypes operTypes[], IT::IDDATATYPE iddatatype, char oper)
 	{
-
 		// цикл по опреациям
 		for (int i = 0; i < OPERNUM; i++)
 		{
@@ -77,7 +73,7 @@ namespace SMTCS
 		return false;
 	}
 
-	IT::IDDATATYPE Get_O_retType(char oper)
+	IT::IDDATATYPE Semantics::Get_O_retType(char oper)
 	{
 		// цикл по опреациям
 		for (int i = 0; i < OPERNUM; i++)
@@ -90,13 +86,13 @@ namespace SMTCS
 	}
 
 	// проверка на раваенство операторов по типу данных
-	bool Check_O_DataTypes(LT::LexTable lexTable, IT::IdTable idTable, char sep,  int strtIndx)
+	bool Semantics::Check_O_DataTypes(char sep,  int strtIndx)
 	{
 		IT::IDDATATYPE operDatatype, iddataType = idTable.table[lexTable.table[strtIndx + 1].idxTI].iddatatype;
 		bool firstOper = false;
 		for (int i = ++strtIndx; lexTable.table[i].lexema[0] != sep; i++)
 		{
-			if (lexTable.table[i].lexema[0] == 'v')
+			if (LT::IsOperation(lexTable.table[i].lexema[0]))
 			{
 				// поиск первой операции
 				if (!firstOper)
@@ -116,7 +112,7 @@ namespace SMTCS
 		return true;
 	}	   
 		
-	bool Check_Assigment_DataTypes(LT::LexTable lexTable, IT::IdTable idTable, IT::IDDATATYPE type, int indx)
+	bool Semantics::Check_Assigment_DataTypes(IT::IDDATATYPE type, int indx)
 	{		   
 		// dataType переменной дожен быть равен типу присваемого выражения
 		return idTable.table[lexTable.table[indx - 1].idxTI].iddatatype ==
@@ -130,19 +126,19 @@ namespace SMTCS
 		bool res = true;
 		for (int i = 0; i < lexTable.posLEX_EQUALSSize; i++)
 		{
-			Check_O_DataTypes(lexTable, idTable, LEX_SEMICOLON, lexTable.posLEX_EQUALS[i]);
-			Check_I_DataTypes(lexTable, idTable, lexTable.posLEX_EQUALS[i]);
+			Check_O_DataTypes(LEX_SEMICOLON, lexTable.posLEX_EQUALS[i]);
+			Check_I_DataTypes(lexTable.posLEX_EQUALS[i]);
 
 			int e = lexTable.posLEX_EQUALS[i];
 			for (; lexTable.table[e].lexema[0] != 'v';)
 				e++;
 
-			Check_Assigment_DataTypes(lexTable, idTable, Get_O_retType(lexTable.table[e].oper_v), lexTable.posLEX_EQUALS[i]);
+			Check_Assigment_DataTypes(Get_O_retType(lexTable.table[e].oper_v), lexTable.posLEX_EQUALS[i]);
 		}
 	}
 	///////////////////////////////////////////////////
 
-	bool CheckFunctionParms(std::queue<IT::IDDATATYPE> types, LT::LexTable lexTable, IT::IdTable idTable, int indx)
+	bool Semantics::CheckFunctionParms(std::queue<IT::IDDATATYPE> types, int indx)
 	{
 		bool res = true;
 		int i = indx + 1;
@@ -189,7 +185,7 @@ namespace SMTCS
 					}
 				}
 
-				CheckFunctionParms(types, lexTable, idTable, funcLTidxDef);
+				CheckFunctionParms(types, funcLTidxDef);
 			}
 		}
 	}
@@ -199,8 +195,8 @@ namespace SMTCS
 		bool res = true;
 		for (int i = 0; i < lexTable.posLEX_IF_RIF.size(); i++)
 		{
-			Check_I_DataTypes(lexTable, idTable, IT::IDDATATYPE::BOOL, LEX_RIGHTHESIS, lexTable.posLEX_IF_RIF.front()) &&
-			Check_O_DataTypes(lexTable, idTable, LEX_RIGHTHESIS, lexTable.posLEX_IF_RIF.front());
+			Check_I_DataTypes(IT::IDDATATYPE::BOOL, LEX_RIGHTHESIS, lexTable.posLEX_IF_RIF.front()) &&
+			Check_O_DataTypes(LEX_RIGHTHESIS, lexTable.posLEX_IF_RIF.front());
 		}
 	}
 

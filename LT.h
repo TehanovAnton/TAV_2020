@@ -23,16 +23,16 @@
 #define LEX_MINUS 'v'				// лексема для -							
 #define LEX_STAR 'v'				// лексема для *							
 #define LEX_DIRSLASH 'v'			// лексема для /
-#define LEX_MORE 'v'				// лексема для >
-#define LEX_LESS 'v'				// лексема для <
+#define LEX_MORE 'w'				// лексема для >									 w => операция возвращает BoolT 
+#define LEX_LESS 'w'				// лексема для <
 
-#define LEX_BOOLEAQUl 'v'			// лексема для ==
+#define LEX_BOOLEAQUl 'w'			// лексема для ==
 #define LEX_BOOLEAQUl_OPER_V 'h'	// ==, oper_v => 'h'
 
-#define LEX_MOREEQ 'v'				// лексема для >=
+#define LEX_MOREEQ 'w'				// лексема для >=
 #define LEX_MOREEQ_OPER_V 'c'		// >=, oper_v => 'c'
 
-#define LEX_LESSEQ 'v'				// лексема для <=
+#define LEX_LESSEQ 'w'				// лексема для <=
 #define LEX_LESSEQ_OPER_V 'g'		// лексема для <=, oper_v => 'g'
 
 #define LEX_EQUAl '='				// лексема для =
@@ -110,4 +110,6 @@ namespace LT							// таблица лексем
 	);
 
 	bool ITPointerBefore(LT::LexTable lexTable, int idx, int ITpointer);
+
+	bool IsOperation(char shrtlex);
 }

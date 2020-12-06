@@ -1,8 +1,7 @@
 defF IntT func(IntT e)
-  e = e + 7 / 5 - 2
-  ret e
+  def IntT m = e
+  ret 1
 end
 defF StartPoint
- def IntT e = 1 + 2
  ret 0
 end
