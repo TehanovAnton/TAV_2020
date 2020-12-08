@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TAV_2020", "TAV_2020.vcxproj", "{6F96B428-3FAA-4DBE-B0E2-4C83978F2083}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TAV_2020_standartLibary", "..\TAV_2020_standartLibary\TAV_2020_standartLibary.vcxproj", "{9A09B88A-1B66-4F1B-9043-52B4DF59F64C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TAV_2020_standartLibary", "TAV_2020_standartLibary\TAV_2020_standartLibary.vcxproj", "{9A09B88A-1B66-4F1B-9043-52B4DF59F64C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
