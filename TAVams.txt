@@ -1,0 +1,157 @@
+.586
+	.model flat, stdcall
+	includelib libucrt.lib
+	includelib libucrt.lib
+	includelib kernel32.lib
+	ExitProcess PROTO :DWORD
+
+	includelib C:\Users\Anton\source\repos\programming languages\TAV_2020\Debug\TAV_2020_standartLibary.lib
+	strlength PROTO :DWORD
+	substr PROTO :DWORD
+	strl PROTO :DWORD
+	strcompare PROTO :DWORD, :DWORD
+
+.stack 4096
+.const
+	L1 DWORD 1
+	L2 DWORD 2
+	L3 DWORD 0
+.586
+	.model flat, stdcall
+	includelib libucrt.lib
+	includelib libucrt.lib
+	includelib kernel32.lib
+	ExitProcess PROTO :DWORD
+
+	includelib C:\Users\Anton\source\repos\programming languages\TAV_2020\Debug\TAV_2020_standartLibary.lib
+	strlength PROTO :DWORD
+	substr PROTO :DWORD
+	strl PROTO :DWORD
+	strcompare PROTO :DWORD, :DWORD
+
+.stack 4096
+.const
+	L1 DWORD 1
+	L2 DWORD 2
+	L3 BYTE hellow world, 0
+	L4 DWORD 0
+.586
+	.model flat, stdcall
+	includelib libucrt.lib
+	includelib libucrt.lib
+	includelib kernel32.lib
+	ExitProcess PROTO :DWORD
+
+	includelib C:\Users\Anton\source\repos\programming languages\TAV_2020\Debug\TAV_2020_standartLibary.lib
+	strlength PROTO :DWORD
+	substr PROTO :DWORD
+	strl PROTO :DWORD
+	strcompare PROTO :DWORD, :DWORD
+
+.stack 4096
+.const
+	L1 DWORD 1
+	L2 DWORD 2
+	L3 BYTE 'hellow world', 0
+	L4 DWORD 0
+.586
+	.model flat, stdcall
+	includelib libucrt.lib
+	includelib libucrt.lib
+	includelib kernel32.lib
+	ExitProcess PROTO :DWORD
+
+	includelib C:\Users\Anton\source\repos\programming languages\TAV_2020\Debug\TAV_2020_standartLibary.lib
+	strlength PROTO :DWORD
+	substr PROTO :DWORD
+	strl PROTO :DWORD
+	strcompare PROTO :DWORD, :DWORD
+
+.stack 4096
+.const
+	L1 DWORD 1
+	L2 DWORD 2
+	L3 BYTE 'hellow world', 0
+	L4 DWORD 0
+.586
+	.model flat, stdcall
+	includelib libucrt.lib
+	includelib libucrt.lib
+	includelib kernel32.lib
+	ExitProcess PROTO :DWORD
+
+	includelib C:\Users\Anton\source\repos\programming languages\TAV_2020\Debug\TAV_2020_standartLibary.lib
+	strlength PROTO :DWORD
+	substr PROTO :DWORD
+	strl PROTO :DWORD
+	strcompare PROTO :DWORD, :DWORD
+
+.stack 4096
+.const
+	L1 DWORD 1
+	L2 DWORD 2
+	L3 BYTE 'hellow world', 0
+	L4 DWORD 0
+.586
+	.model flat, stdcall
+	includelib libucrt.lib
+	includelib libucrt.lib
+	includelib kernel32.lib
+	ExitProcess PROTO :DWORD
+
+	includelib C:\Users\Anton\source\repos\programming languages\TAV_2020\Debug\TAV_2020_standartLibary.lib
+	strlength PROTO :DWORD
+	substr PROTO :DWORD
+	strl PROTO :DWORD
+	strcompare PROTO :DWORD, :DWORD
+
+.stack 4096
+.const
+	L1 DWORD 1
+	L2 DWORD 2
+	L3 BYTE 'hellow world', 0
+	L4 BYTE 1
+	L5 BYTE 0
+	L6 DWORD 0
+.586
+	.model flat, stdcall
+	includelib libucrt.lib
+	includelib libucrt.lib
+	includelib kernel32.lib
+	ExitProcess PROTO :DWORD
+
+	includelib C:\Users\Anton\source\repos\programming languages\TAV_2020\Debug\TAV_2020_standartLibary.lib
+	strlength PROTO :DWORD
+	substr PROTO :DWORD
+	strl PROTO :DWORD
+	strcompare PROTO :DWORD, :DWORD
+
+.stack 4096
+.const
+	L1 DWORD 1
+	L2 DWORD 2
+	L3 BYTE 'hellow world', 0
+	L4 BYTE 1
+	L5 BYTE 0
+	L6 DWORD 0
+.586
+	.model flat, stdcall
+	includelib libucrt.lib
+	includelib libucrt.lib
+	includelib kernel32.lib
+	ExitProcess PROTO :DWORD
+
+	includelib C:\Users\Anton\source\repos\programming languages\TAV_2020\Debug\TAV_2020_standartLibary.lib
+	strlength PROTO :DWORD
+	substr PROTO :DWORD
+	strl PROTO :DWORD
+	strcompare PROTO :DWORD, :DWORD
+
+.stack 4096
+.const
+	L1 DWORD 1
+	L2 DWORD 2
+	L3 BYTE 'hellow world', 0
+	L4 BYTE 1
+	L5 BYTE 0
+	L6 DWORD 0

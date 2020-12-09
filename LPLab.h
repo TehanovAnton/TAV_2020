@@ -533,9 +533,8 @@ void LTITBuilding(LT::LexTable& lexTable, IT::IdTable& idTable, std::string orif
 void set_aB(LT::LexTable lexTable, IT::IdTable& idTable, int& lstChngId, int aB, int& aE)
 {
 	for (int i = aB + 1;
-		lexTable.table[i].lexema[0] != LEX_END &&																  // правая фигурная
-		i < lexTable.size &&																						  // конец LT
-		!(lexTable.table[i].lexema[0] == LEX_RIGHTHESIS && lexTable.table[i + 1].lexema[0] == LEX_SEMICOLON);		  // конец объявления прототипа F
+		lexTable.table[i].lexema[0] != LEX_END &&				// лексема end 
+		i < lexTable.size;										// конец LT
 		i++, aE = i)
 	{
 		LT::Entry elLT = lexTable.table[i];
@@ -574,7 +573,7 @@ void set_aE(IT::IdTable& idTable, int lstChngId, int aB, int aE)
 
 bool operator <= (IT::visibleArea a, IT::visibleArea b)
 {
-	return (a.aB > b.aB && a.aE < b.aE) || (a.aB == b.aB && a.aE == b.aE);
+	return (a.aB > b.aB && b.aE < a.aE) || (a.aB == b.aB && a.aE == b.aE);
 }
 bool operator != (IT::visibleArea a, IT::visibleArea b)
 {
@@ -610,7 +609,8 @@ void exposingNamespaces(LT::LexTable lexTable, IT::IdTable& idTable)
 			{
 				if (strcamper(elIT.id, idTable.table[e].id) && elIT.vsbAr <= idTable.table[e].vsbAr)
 				{
-					printf("переопределение идентификатора: %s,\t{%d, %d}\n", elIT.id, lexTable.positions[elIT.idxfirstLE - 1].line, lexTable.positions[elIT.idxfirstLE - 1].colone);
+					printf("\n\n???: %s :???", elIT.id);
+					throw ERROR_THROW_IN(125, lexTable.positions[elIT.idxfirstLE - 1].line, lexTable.positions[elIT.idxfirstLE - 1].colone)			
 				}
 			}
 		}

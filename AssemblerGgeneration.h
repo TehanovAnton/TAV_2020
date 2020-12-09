@@ -10,11 +10,12 @@ namespace AsmGen
 	{
 		LT::LexTable lextable;
 		IT::IdTable	 idtable;
-		std::ofstream outFile;
+		std::fstream outFile;
+		Gen(LT::LexTable plextable, IT::IdTable pidTable, const char* pathOutFile);
 
 		void AssemblerHead();
 		void AssemblerConst();
-		void AssemblerData();
-		void AssemblerCode();
+		//void AssemblerData();
+		/*void AssemblerCode();*/		
 	};
 }

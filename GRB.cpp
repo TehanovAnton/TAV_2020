@@ -6,7 +6,7 @@ namespace GRB				// S N E M F W Y Z
 	Greibach greibach(
 		NS('S'),										 // стартовый символ
 		TS('$'),										 // дно стека
-		8,												 // количество правил
+		9,												 // количество правил
 		Rule(NS('S'), GRB__ERROR_SERIES + 0,			 // неверная структруа программы
 			4,
 			Rule::Chain(7, TS('f'), TS('m'), TS(';'), TS('r'), NS('E'), TS(';'), TS('e')),
@@ -14,15 +14,23 @@ namespace GRB				// S N E M F W Y Z
 			Rule::Chain(9, TS('f'), TS('m'), TS(';'), NS('N'), TS('r'), NS('E'), TS(';'), TS('e'), TS(';'), NS('S')),
 			Rule::Chain(14, TS('f'), TS('t'), TS('i'), TS('('), NS('F'), TS(')'), TS(';'), NS('N'), TS('r'), NS('E'), TS(';'), TS('e'), TS(';'), NS('S'))
 		),																					   
-		/* N -> dti(F); | dti(F); N | dti = E; | dti = E; N  | ri; N | ri; | rl; N | rl; | i = E; N | i = E; | i = Z; N | i = Z; | dtfi(F); N | dtfi(F);
-		   | pE; | pE; N |
+		/* N -> dti = Z; | dti = Z; N |
+		   dti = E; | dti = E; N  |
+		   dti = X; | dti = X; N  |
+		   ri; N | ri; | rl; N | rl; | i = E; N | i = E; | i = Z; N | i = Z;
+		   i = X; N | i = X;
+		   pE; | pE; N |
 		   a(Z); N e; | a(Z); N e; N |					 // условный опрератор
 		   b(Z); N e; | b(Z); N e; N					 // опрератор цикла
 		*/
 		Rule(NS('N'), GRB__ERROR_SERIES + 1,			 // ошибочный опрератор
-			18,
+			22,																			   
+			Rule::Chain(6, TS('d'), TS('t'), TS('i'), TS('='), NS('Z'), TS(';')),
+			Rule::Chain(7, TS('d'), TS('t'), TS('i'), TS('='), NS('Z'), TS(';'), NS('N')),
 			Rule::Chain(6, TS('d'), TS('t'), TS('i'), TS('='), NS('E'), TS(';')),
 			Rule::Chain(7, TS('d'), TS('t'), TS('i'), TS('='), NS('E'), TS(';'), NS('N')),
+			Rule::Chain(6, TS('d'), TS('t'), TS('i'), TS('='), NS('X'), TS(';')),
+			Rule::Chain(7, TS('d'), TS('t'), TS('i'), TS('='), NS('X'), TS(';'), NS('N')),
 			Rule::Chain(4, TS('r'), TS('i'), TS(';'), NS('N')),
 			Rule::Chain(3, TS('r'), TS('i'), TS(';')),
 			Rule::Chain(4, TS('r'), TS('l'), TS(';'), NS('N')),
@@ -31,26 +39,24 @@ namespace GRB				// S N E M F W Y Z
 			Rule::Chain(4, TS('i'), TS('='), NS('E'), TS(';')),
 			Rule::Chain(5, TS('i'), TS('='), NS('Z'), TS(';'), NS('N')),
 			Rule::Chain(4, TS('i'), TS('='), NS('Z'), TS(';')),
-			Rule::Chain(8, TS('f'), TS('t'), TS('i'), TS('('), NS('F'), TS(')'), TS(';'), NS('N')),
-			Rule::Chain(7, TS('f'), TS('t'), TS('i'), TS('('), NS('F'), TS(')'), TS(';')),
+			Rule::Chain(5, TS('i'), TS('='), NS('X'), TS(';'), NS('N')),
+			Rule::Chain(4, TS('i'), TS('='), NS('X'), TS(';')),
 			Rule::Chain(4, TS('p'), NS('E'), TS(';'), NS('N')),
 			Rule::Chain(3, TS('p'), NS('E'), TS(';')),
-			Rule::Chain(9, TS('a'), TS('('), NS('E'), TS(')'), TS(';'), NS('N'), TS('e'), TS(';'), NS('N')),
-			Rule::Chain(8, TS('a'), TS('('), NS('E'), TS(')'), TS(';'), NS('N'), TS('e'), TS(';')),
-			Rule::Chain(9, TS('b'), TS('('), NS('E'), TS(')'), TS(';'), NS('N'), TS('e'), TS(';'), NS('N')),
-			Rule::Chain(8, TS('b'), TS('('), NS('E'), TS(')'), TS(';'), NS('N'), TS('e'), TS(';'))
+			Rule::Chain(9, TS('a'), TS('('), NS('Z'), TS(')'), TS(';'), NS('N'), TS('e'), TS(';'), NS('N')),
+			Rule::Chain(8, TS('a'), TS('('), NS('Z'), TS(')'), TS(';'), NS('N'), TS('e'), TS(';')),
+			Rule::Chain(9, TS('b'), TS('('), NS('Z'), TS(')'), TS(';'), NS('N'), TS('e'), TS(';'), NS('N')),
+			Rule::Chain(8, TS('b'), TS('('), NS('Z'), TS(')'), TS(';'), NS('N'), TS('e'), TS(';'))
 		),
-		//E -> i | l | (E) | i(W) | iM | lM | (E)M | i(W)M | Z
+		//E -> i | l | (E) | iM | lM | (E)M | i(W)M | Z
 		Rule(NS('E'), GRB__ERROR_SERIES + 2,
-			8,											 // ошибка в выражении
+			6,											 
 			Rule::Chain(1, TS('i')),
 			Rule::Chain(1, TS('l')),
 			Rule::Chain(3, TS('('), NS('E'), TS(')')),
-			Rule::Chain(4, TS('i'), TS('('), NS('W'), TS(')')),
 			Rule::Chain(2, TS('i'), NS('M')),
 			Rule::Chain(2, TS('l'), NS('M')),
-			Rule::Chain(4, TS('('), NS('E'), TS(')'), NS('M')),
-			Rule::Chain(5, TS('i'), TS('('), NS('W'), TS(')'), NS('M'))			
+			Rule::Chain(4, TS('('), NS('E'), TS(')'), NS('M'))					
 		),
 		//M -> vE |  v(E) | vEM
 		Rule(NS('M'), GRB__ERROR_SERIES + 3,
@@ -79,13 +85,20 @@ namespace GRB				// S N E M F W Y Z
 			Rule::Chain(1, TS('i')),
 			Rule::Chain(1, TS('l')),
 			Rule::Chain(2, TS('i'), NS('Y')),
-			Rule::Chain(2, TS('l'), NS('Y'))
-		),
-		// Y -> i | l | iY
+			Rule::Chain(2, TS('l'), NS('Y'))			
+		),		
+
+		// Y -> wi | wl				w -> booloper
 		Rule(NS('Y'), GRB__ERROR_SERIES + 7,
 			2,
 			Rule::Chain(2, TS('w'), TS('l')),
 			Rule::Chain(2, TS('w'), TS('i'))
+		),
+
+		// X ->i(W)
+		Rule(NS('X'), GRB__ERROR_SERIES + 8,
+			1,
+			Rule::Chain(4, TS('i'), TS('('), NS('W'), TS(')'))
 		)
 	);
 

@@ -1,7 +1,12 @@
 defF IntT func(IntT e)
-def IntT m=e
+def IntT k=e
 ret 1
 end
 defF StartPoint
+def IntT e=func(2)
+def StrT m='hellow world'
+def IntT i=1+e
+def BoolT k=true
+k=false
 ret 0
 end

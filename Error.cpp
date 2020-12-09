@@ -18,7 +18,7 @@ namespace Error
 		ERROR_ENTRY(102, "параметр -in, должен быть задан"),
 		ERROR_ENTRY(103, "ошибка открытия файла сисходным кодом (-in)"),
 		ERROR_ENTRY(104, "ошибка при создании файла протокола (-log)"),
-		ERROR_ENTRY(105, "ошибка при создании файла протокола (-log)"),
+		ERROR_ENTRY(105, "ошибка открытия файла при генерации кода (TAVasm.asm)"),
 		ERROR_ENTRY(106, ""),
 		ERROR_ENTRY(107, ""),
 		ERROR_ENTRY(108, ""),
@@ -35,12 +35,12 @@ namespace Error
 
 		ERROR_ENTRY_NODEF(118), ERROR_ENTRY_NODEF(119),
 															 
-		ERROR_ENTRY(120, "несоответствие типов операндов в выражении"),			 // ошибки типов
+		ERROR_ENTRY(120, "несоответствие типов операндов в выражении"),			 // ошибки типов, переопределение
 		ERROR_ENTRY(121, "несоответствие типов операций в выражении"),
 		ERROR_ENTRY(122, "несоответствие типа присваемого значения"),
 		ERROR_ENTRY(123, "несоответствие типа параметра при вызове функции"),
 		ERROR_ENTRY(124, "неверное количество параметров при вызове функции"),
-		ERROR_ENTRY(125, ""),
+		ERROR_ENTRY(125, "переопределение идентификатора"),
 		ERROR_ENTRY(126, ""),
 		ERROR_ENTRY(127, ""),
 		ERROR_ENTRY(128, ""),
@@ -51,7 +51,7 @@ namespace Error
 		ERROR_ENTRY_NODEF10(160), ERROR_ENTRY_NODEF10(170), ERROR_ENTRY_NODEF10(180), ERROR_ENTRY_NODEF10(190),
 		ERROR_ENTRY_NODEF100(200), ERROR_ENTRY_NODEF100(300), ERROR_ENTRY_NODEF100(400), ERROR_ENTRY_NODEF100(500),
 
-		ERROR_ENTRY(600, "неверная структура программы"),					// ошиьки синтаксиса
+		ERROR_ENTRY(600, "неверная структура программы"),					// ошибки синтаксиса
 		ERROR_ENTRY(601, "Ошибочный оператор"),
 		ERROR_ENTRY(602, "Ошибка в выражении"),
 		ERROR_ENTRY(603, "ошибка в парамметрах фнкции"),

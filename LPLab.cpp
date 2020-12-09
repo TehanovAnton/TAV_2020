@@ -1,7 +1,10 @@
 ﻿#include"LPLab.h"
 #include "PolishNotation.h"
+#include"AssemblerGgeneration.h"
 #include"MFST.h"
 #include"Semantics.h"
+
+#define TAVasmOutFile "C:\\Users\\Anton\\source\\repos\\programming languages\\TAV_2020\\TAVams.txt"
 
 #define LPLab 1	
 int _tmain(int argc, _TCHAR* argv[])
@@ -51,18 +54,17 @@ int _tmain(int argc, _TCHAR* argv[])
 		// LPLab14-2
 		LTITBuilding(lexTable, idTable, resStr);
 
-		exposingNamespaces(lexTable, idTable);
-
 		//вывод LT
 		/*lexTable.PrintTable();
 		std::cout << "\n\n\n";*/
 
 		////LPLab16
-		MFST_TRACE_START											   // отладка
-		MFST::Mfst mfst(lexTable, GRB::getGreibach());			   // автомат
-		mfst.start();												   // старт синтаксического анализа
+		//MFST_TRACE_START											   // отладка
+		//MFST::Mfst mfst(lexTable, GRB::getGreibach());			   // автомат
+		//mfst.start();												   // старт синтаксического анализа
 
 		////LPLab15
+		exposingNamespaces(lexTable, idTable);
 		ChangeLTWithPN(lexTable, idTable);
 
 		////вывод LT
@@ -77,6 +79,8 @@ int _tmain(int argc, _TCHAR* argv[])
 		//вывод IT
 		idTable.PrintTable();
 
+		// генерация кода
+		AsmGen::Gen generrator(lexTable, idTable, TAVasmOutFile);
 		Log::Close(log);
 
 #endif // LPLab

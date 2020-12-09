@@ -130,10 +130,14 @@ namespace SMTCS
 			Check_I_DataTypes(lexTable.posLEX_EQUALS[i]);
 
 			int e = lexTable.posLEX_EQUALS[i];
-			for (; lexTable.table[e].lexema[0] != 'v';)
+			IT::IDDATATYPE noOper = idTable.table[lexTable.table[e + 1].idxTI].iddatatype;
+			for (; lexTable.table[e].lexema[0] != 'v' && lexTable.table[e].lexema[0] != LEX_SEMICOLON;)	  // до первой операции
 				e++;
 
-			Check_Assigment_DataTypes(Get_O_retType(lexTable.table[e].oper_v), lexTable.posLEX_EQUALS[i]);
+			if (lexTable.table[e].lexema[0] == LEX_SEMICOLON)				// выражение не имеет операций
+				Check_Assigment_DataTypes(noOper, lexTable.posLEX_EQUALS[i]);
+			else
+				Check_Assigment_DataTypes(Get_O_retType(lexTable.table[e].oper_v), lexTable.posLEX_EQUALS[i]);
 		}
 	}
 	///////////////////////////////////////////////////
