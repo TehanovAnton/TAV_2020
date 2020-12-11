@@ -230,7 +230,7 @@ namespace PN
 		res.Addpnstr(el, idTable, res.size++, -1);
 		res.Addpnstr(elArr, idTable, res.size++, -1);
 	}
-	bool PolishNotation(int expressionStart, LT::LexTable& lexTable, IT::IdTable& idTable, int& countEmptyEl)
+	bool PolishNotation(int expressionStart, LT::LexTable& lexTable, IT::IdTable& idTable, int& countEmptyEl, bool IfRif)
 	{
 		SymWithPrioryty prioryties[SymWithPriorytyAmount] = { prior_1, prior_2, prior_3 };
 		PNLTstr res = PNLTstr();
@@ -279,6 +279,9 @@ namespace PN
 					}
 					if (!stck.empty())
 						stck.pop();
+
+					if (IfRif) // выход если обрабатывается IF RIF
+						break;
 				}
 				// в верщине стека и строки опрерация 
 				else if (isSymInStr(lex, Operations) && isSymInStr(stck.top().oper_v, Operations))
@@ -323,6 +326,8 @@ namespace PN
 			}
 			else
 			{
+				if (IfRif)				// выход при обработке IF RIF
+					break;
 				lexTable.table[i].sn = lexTable.table[i].idxTI = TI_NULLIDX;
 				lexTable.table[i].lexema[0] = '\0';
 				lexTable.positions[i] = LT::Position(-1, -1);

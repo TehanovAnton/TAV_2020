@@ -52,5 +52,5 @@ namespace PN // PolishNotation
 
 	void parseFunctoPnstrLT(LT::LexTable& lexTable, IT::IdTable& idTable, PNLTstr& res, int& i, std::stack<LT::Entry>& stck, SymWithPrioryty prioryties[]);
 	void parseArrtoPnstrLT(LT::LexTable& lexTable, IT::IdTable& idTable, PNLTstr& res, int& i, std::stack<LT::Entry>& stck, SymWithPrioryty prioryties[]);
-	bool PolishNotation(int exprStart, LT::LexTable& lexTable, IT::IdTable& idTable, int& countEmptyEl);
+	bool PolishNotation(int exprStart, LT::LexTable& lexTable, IT::IdTable& idTable, int& countEmptyEl, bool IfRif = false);
 }

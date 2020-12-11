@@ -10,7 +10,8 @@
 #define moreEqual ">="	// oper_v => 'c'
 #define lessEqual "<="	// oper_v => 'g'
 #define boolEqual "=="	// oper_v => 'h'
-#define EMPTYSTR '\0'		 
+#define EMPTYSTR '\0'	
+#define JUSTNUBERS "0123456789"
 #include<iostream>
 
 void strcopy(char* destination, char source[]);

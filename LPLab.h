@@ -387,6 +387,10 @@ bool parsingLexem(char lexem[], LT::LexTable& lexTable, IT::IdTable& idTable, LT
 					throw ERROR_THROW_IN(117, line, lexTable.positions[lexCounter - 1].colone)
 				}
 			}
+			// добавление позиций IF RIF для PL
+			if (shrtLex[0] == LEX_LEFTHESIS &&
+				lexTable.table[lexTable.size - 1].lexema[0] == LEX_IF || lexTable.table[lexTable.size - 1].lexema[0] == LEX_RIF)
+				lexTable.posLEX_EQUALS[lexTable.posLEX_EQUALSSize++] = lexTable.size;
 
 			FillLT(lexTable, entryL,  lexem, shrtLex, line);
 
@@ -624,7 +628,9 @@ void ChangeLTWithPN(LT::LexTable& lexTable, IT::IdTable& idTable)
 	int countEmptyEl = 0;
 	for (int i = 0; i < lexTable.posLEX_EQUALSSize; i++)
 	{
-		PN::PolishNotation(lexTable.posLEX_EQUALS[i], lexTable, idTable, countEmptyEl);
+		lexTable.table[lexTable.posLEX_EQUALS[i] - 1].lexema[0] == LEX_IF || lexTable.table[lexTable.posLEX_EQUALS[i] - 1].lexema[0] == LEX_RIF ? 
+			PN::PolishNotation(lexTable.posLEX_EQUALS[i], lexTable, idTable, countEmptyEl, true) :
+			PN::PolishNotation(lexTable.posLEX_EQUALS[i], lexTable, idTable, countEmptyEl);
 	}
 	// исключение пустых элементов
 	LT::Entry* cleanTable = new  LT::Entry[lexTable.size - countEmptyEl];
