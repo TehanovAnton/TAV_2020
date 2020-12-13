@@ -242,6 +242,14 @@ bool parsingLexem(char lexem[], LT::LexTable& lexTable, IT::IdTable& idTable, LT
 
 #if TOKENINIT
 
+	FST::FST ConcatStd(
+		lexem,                                                                                                        // ципочка распознавания 
+		ConcatStdLibTOk);
+
+	FST::FST CompareStd(
+		lexem,                                                                                                        // ципочка распознавания 
+		CompareStdLibTOk);
+
 	FST::FST ELSL(
 		lexem,                                                                                                        // ципочка распознавания 
 		ELSKWTOk);
@@ -254,10 +262,6 @@ bool parsingLexem(char lexem[], LT::LexTable& lexTable, IT::IdTable& idTable, LT
 		lexem,                                                                                                        // ципочка распознавания 
 		rightBracetLTok);
 
-	FST::FST RIFKeyWord(
-		lexem,                                                                                                        // ципочка распознавания 
-		RIFKWTok);
-
 	FST::FST endL(
 		lexem,                                                                                                        // ципочка распознавания 
 		endKWTok);
@@ -265,10 +269,6 @@ bool parsingLexem(char lexem[], LT::LexTable& lexTable, IT::IdTable& idTable, LT
 	FST::FST commaL(
 		lexem,                                                                                                        // ципочка распознавания 
 		commaLTok);
-
-	FST::FST semicolonL(
-		lexem,                                                                                                        // ципочка распознавания 
-		semicolonLTok);
 
 	FST::FST plusL(
 		lexem,                                                                                                        // ципочка распознавания 
@@ -294,14 +294,6 @@ bool parsingLexem(char lexem[], LT::LexTable& lexTable, IT::IdTable& idTable, LT
 		lexem,                                                                                                        // ципочка распознавания 
 		boolequalLTok);
 
-	FST::FST lesseqL(
-		lexem,                                                                                                        // ципочка распознавания 
-		lesseqLTok);
-
-	FST::FST moreeqL(
-		lexem,                                                                                                        // ципочка распознавания 
-		moreeqLTok);
-
 	FST::FST lessL(
 		lexem,                                                                                                        // ципочка распознавания 
 		lessLTok);
@@ -310,6 +302,10 @@ bool parsingLexem(char lexem[], LT::LexTable& lexTable, IT::IdTable& idTable, LT
 		lexem,                                                                                                        // ципочка распознавания 
 		moreLTok);
 
+	FST::FST moduloL(
+		lexem,                                                                                                        // ципочка распознавания 
+		moduloLTok);
+
 	FST::FST IntTKeyWord(
 		lexem,
 		IntTKWTOk);
@@ -317,10 +313,6 @@ bool parsingLexem(char lexem[], LT::LexTable& lexTable, IT::IdTable& idTable, LT
 	FST::FST StrTKeyWord(
 		lexem,                                                                                                        // ципочка распознавания 
 		StrTKWTok);
-
-	FST::FST BoolTKeyWord(
-		lexem,                                                                                                        // ципочка распознавания 
-		BoolTKWTok);
 
 	FST::FST defFKeyWord(
 		lexem,                                                                                                        // ципочка распознавания 
@@ -342,14 +334,6 @@ bool parsingLexem(char lexem[], LT::LexTable& lexTable, IT::IdTable& idTable, LT
 		lexem,                                                                                                        // ципочка распознавания 
 		putKWTok);
 
-	FST::FST trueKeyWord(
-		lexem,                                                                                                        // ципочка распознавания 
-		trueKWTok);
-
-	FST::FST falseKeyWord(
-		lexem,                                                                                                        // ципочка распознавания 
-		falseKWTok);
-
 	FST::FST StartPointKeyWord(
 		lexem,                                                                                                        // ципочка распознавания 
 		StartPointKWTok);
@@ -361,14 +345,6 @@ bool parsingLexem(char lexem[], LT::LexTable& lexTable, IT::IdTable& idTable, LT
 	FST::FST IntTDecLiteral(
 		lexem,
 		IntTDecLiteralTok);
-
-	FST::FST IntTOctLiteral(
-		lexem,
-		IntTOctLiteralTok);
-
-	FST::FST IntTBinLiteral(
-		lexem,
-		IntTBinLiteralTok);
 
 	FST::FST IntTHexLiteral(
 		lexem,
@@ -385,20 +361,20 @@ bool parsingLexem(char lexem[], LT::LexTable& lexTable, IT::IdTable& idTable, LT
 #endif // TOKENINIT																											 
 
 	FST::FST tokenLexems[NUMLEXEM] =
-		{ StartPointKeyWord,	StrTKeyWord,		IntTKeyWord,		BoolTKeyWord,	StrTLiteral,	IntTDecLiteral, 
-		IntTOctLiteral,			IntTHexLiteral,		IntTBinLiteral,		trueKeyWord,	falseKeyWord,	defFKeyWord, 
-		moreL,					ELSL,				defKeyWord,			retKeyWord,		putKeyWord,		endL,			
-		leftBracetL, 			rightBracetL,		identificator,		commaL, 		semicolonL,		plusL,
-		minusL,					multiplicationL,	lessL,				boolequalL,		devisionL,		equalL,
-		newlineKeyWord,			IFKeyWord,			RIFKeyWord,			moreeqL,		lesseqL};
+		{ StartPointKeyWord,	StrTKeyWord,		IntTKeyWord,		StrTLiteral,	IntTDecLiteral, 
+		IntTHexLiteral,			defFKeyWord,		moreL,				ELSL,			defKeyWord,
+		retKeyWord,				putKeyWord,			endL,				leftBracetL,	rightBracetL,
+		IFKeyWord,				commaL, 			plusL,				minusL,			multiplicationL,
+		lessL,					boolequalL,			devisionL,			equalL,			newlineKeyWord,
+		ConcatStd,				CompareStd,			moduloL,			identificator};
 
 	char shortLexm[NUMLEXEM] = 
-		{ LEX_ID,		LEX_STRT,			LEX_INTT,		LEX_BOOLT,		LEX_LITERAL,	LEX_LITERAL,
-		LEX_LITERAL,	LEX_LITERAL,		LEX_LITERAL,	LEX_LITERAL,	LEX_LITERAL,	LEX_DEFF,
-		LEX_MORE,		LEX_ElS,			LEX_DEF,		LEX_RET,		LEX_PUT,		LEX_END,
-		LEX_LEFTHESIS,	LEX_RIGHTHESIS,		LEX_ID,			LEX_COMMA,		LEX_SEMICOLON,	LEX_PLUS,
-		LEX_MINUS,		LEX_STAR,			LEX_LESS,		LEX_BOOLEAQUl,	LEX_DIRSLASH,	LEX_EQUAl,
-		LEX_NEWLINE,	LEX_IF,				LEX_RIF,		LEX_MOREEQ,		LEX_LESSEQ};
+		{ LEX_ID,		LEX_STRT,			LEX_INTT,		LEX_LITERAL,	LEX_LITERAL,
+		LEX_LITERAL,	LEX_DEFF,			LEX_MORE,		LEX_ElS,		LEX_DEF,
+		LEX_RET,		LEX_PUT,			LEX_END,		LEX_LEFTHESIS,	LEX_RIGHTHESIS,
+		LEX_IF,			LEX_COMMA,			LEX_PLUS,		LEX_MINUS,		LEX_STAR,
+		LEX_LESS,		LEX_BOOLEAQUl,		LEX_DIRSLASH,	LEX_EQUAl,		LEX_NEWLINE,
+		LEX_ID,			LEX_ID,				LEX_MODULOL,	LEX_ID};
 
 	for (int i = 0; i < NUMLEXEM; i++)
 	{
@@ -418,6 +394,34 @@ bool parsingLexem(char lexem[], LT::LexTable& lexTable, IT::IdTable& idTable, LT
 			if (shrtLex[0] == LEX_LEFTHESIS &&
 				lexTable.table[lexTable.size - 1].lexema[0] == LEX_IF || lexTable.table[lexTable.size - 1].lexema[0] == LEX_RIF)
 				lexTable.posLEX_EQUALS[lexTable.posLEX_EQUALSSize++] = lexTable.size;
+
+			if (i == 25 || i == 26  && IT::IstdByID(idTable, entryI.id) == (int)TI_NULLIDX)
+			{
+				LT::Entry stdLib = entryL = LT::Entry('\0', shrtLex[0], line, LT_TILNULLIDX);
+				stdLib.sn = line, stdLib.cn = 0, stdLib.idxTI = idTable.size, stdLib.lexema[0] = LEX_ID, stdLib.oper_v = '\0';
+				LT::Add(lexTable, stdLib);
+
+				if (i == 25)
+				{									
+					IT::Entry stdIDLib = IT::Entry(lexem, lexCounter, IT::IDDATATYPE::STR, IT::IDTYPE::F);
+					IT::Add(idTable, stdIDLib, lexTable.positions[lexCounter - 1].line, lexTable.positions[lexCounter - 1].colone);
+				}
+				else
+				{
+					IT::Entry  stdIDLib = IT::Entry(lexem, lexCounter, IT::IDDATATYPE::INT, IT::IDTYPE::F);
+					IT::Add(idTable, stdIDLib, lexTable.positions[lexCounter - 1].line, lexTable.positions[lexCounter - 1].colone);
+				}
+
+				preLastToken = lastToken;
+				lastToken = i;
+
+				return true;
+			}
+			else if(i == 25 || i == 26 && IT::IstdByID(idTable, entryI.id) != (int)TI_NULLIDX)
+			{
+				lexTable.table[lexTable.size - 1].idxTI = IT::IstdFromCurrent(idTable, IdbyLexem(lexem));
+				return true;
+			}
 
 			FillLT(lexTable, entryL,  lexem, shrtLex, line);
 
@@ -581,10 +585,13 @@ void set_aB(LT::LexTable lexTable, IT::IdTable& idTable, int& lstChngId, int aB,
 		}
 		else
 		{
-			if (elLT.lexema[0] == LEX_ID && idTable.table[elLT.idxTI].vsbAr.aB == NOVSBAR && idTable.table[elLT.idxTI].idtype == IT::IDTYPE::V)
+			if (elLT.lexema[0] == LEX_ID)
 			{ 
-				idTable.table[elLT.idxTI].vsbAr.aB = aB;
-				lstChngId = elLT.idxTI;
+				if (idTable.table[elLT.idxTI].vsbAr.aB == NOVSBAR && idTable.table[elLT.idxTI].idtype == IT::IDTYPE::V || idTable.table[elLT.idxTI].idtype == IT::IDTYPE::P)
+				{
+					idTable.table[elLT.idxTI].vsbAr.aB = aB;
+					lstChngId = elLT.idxTI;
+				}
 			}
 			
 			else

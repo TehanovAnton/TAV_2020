@@ -22,10 +22,12 @@ namespace GRB				// S N E M F W Y Z
 		   pE; | pE; N |
 		   a(Z); N e; | a(Z); N e; N |					 // условный опрератор
 		   j; N											 // els переход
-		   b(Z); N e; | b(Z); N e; N					 // опрератор цикла
+		   b(Z); N e; | b(Z); N e; N |					 // опрератор цикла
+		   i(W); N |
+		   i(W);
 		*/
 		Rule(NS('N'), GRB__ERROR_SERIES + 1,			 // ошибочный опрератор
-			23,																			   
+			25,																			   
 			Rule::Chain(6, TS('d'), TS('t'), TS('i'), TS('='), NS('Z'), TS(';')),
 			Rule::Chain(7, TS('d'), TS('t'), TS('i'), TS('='), NS('Z'), TS(';'), NS('N')),
 			Rule::Chain(6, TS('d'), TS('t'), TS('i'), TS('='), NS('E'), TS(';')),
@@ -48,7 +50,9 @@ namespace GRB				// S N E M F W Y Z
 			Rule::Chain(8, TS('a'), TS('('), NS('Z'), TS(')'), TS(';'), NS('N'), TS('e'), TS(';')),
 			Rule::Chain(3, TS('j'), TS(';'), NS('N')),
 			Rule::Chain(9, TS('b'), TS('('), NS('Z'), TS(')'), TS(';'), NS('N'), TS('e'), TS(';'), NS('N')),
-			Rule::Chain(8, TS('b'), TS('('), NS('Z'), TS(')'), TS(';'), NS('N'), TS('e'), TS(';'))
+			Rule::Chain(8, TS('b'), TS('('), NS('Z'), TS(')'), TS(';'), NS('N'), TS('e'), TS(';')),
+			Rule::Chain(6, TS('i'), TS('('), NS('W'), TS(')'), TS(';'), NS('N')),
+			Rule::Chain(5, TS('i'), TS('('), NS('W'), TS(')'), TS(';'))
 		),
 		//E -> i | l | (E) | iM | lM | (E)M | i(W)M | Z
 		Rule(NS('E'), GRB__ERROR_SERIES + 2,

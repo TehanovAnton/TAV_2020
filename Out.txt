@@ -1,23 +1,41 @@
-defF IntT f(IntT e)
-def IntT k=0xee
-def BoolT r=true
-r=false
-RIF(e>1)
-e=e-1
-def StrT a='  '
-put 5
+proc inttype conditionaloperator(inttype x,inttype y)
+if(x<y)
+out 'x less then y'
+else
+out 'x more then y'
 end
-IF(e>1)
-def StrT i='  '
-put 5
-ELS
-put 7
-def StrT a='  '
+if(x>y)
+out 'x more then y'
+else
+out 'x less then y'
 end
-def StrT l='  '
-ret k
+ret 0
 end
-defF StartPoint
-def IntT k=f(3)
+proc inttype arithmeticoperations(inttype x,inttype y)
+def inttype add=0xa+0x1
+out add
+def inttype sub=x-y
+out sub
+def inttype mult=x*y
+out mult
+def inttype div=0xd/0x2
+out div
+def inttype modulo=x % y
+out modulo
+ret 0
+end
+proc strtype fstandlib(strtype s)
+def strtype scnct=concat(s,s)
+out 'strings concatenation:'
+out scnct
+def inttype scmpr=compare(s,'l')
+out 'string comparison:'
+out scmpr
+ret 0
+end
+proc StartPoint
+def inttype firstres=conditionaloperator(1,2)
+def inttype secondres=arithmeticoperations(7,2)
+fstandlib('andrewtehanov')
 ret 0
 end

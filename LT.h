@@ -1,7 +1,7 @@
 #pragma once
 #define LEXEMA_FIXSIZE 1			// фиксированный размер лексемы
 #define LT_MAXSIZE 1024				// максимальное количество строк в таблице лексем
-#define LT_TILNULLIDX 0xffffffff	// нет элемента таблицы идентификаторов 
+#define LT_TILNULLIDX 0xffffffff	// нет элемента таблицы идентификаторов
 #define LEX_ElS	'j'					// лексема для ELS
 #define LEX_INTT 't'				// лексема для IntT
 #define LEX_STRT 't'				// лексема для StrT
@@ -24,6 +24,7 @@
 #define LEX_MINUS 'v'				// лексема для -							
 #define LEX_STAR 'v'				// лексема для *							
 #define LEX_DIRSLASH 'v'			// лексема для /
+#define LEX_MODULOL 'v'			// лексема для %
 #define LEX_MORE 'w'				// лексема для >									 w => операция возвращает BoolT 
 #define LEX_LESS 'w'				// лексема для <
 

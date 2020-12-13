@@ -58,10 +58,15 @@ int _tmain(int argc, _TCHAR* argv[])
 		lexTable.PrintTable();
 		std::cout << "\n\n\n";
 
+		//вывод IT
+		idTable.PrintTable();
+
+
 		////LPLab16
 		//MFST_TRACE_START											   // отладка
 		//MFST::Mfst mfst(lexTable, GRB::getGreibach());			   // автомат
 		//mfst.start();												   // старт синтаксического анализа
+		//mfst.printrules();
 
 		////LPLab15
 		exposingNamespaces(lexTable, idTable);
@@ -71,10 +76,11 @@ int _tmain(int argc, _TCHAR* argv[])
 		lexTable.PrintTable();
 		std::cout << "\n\n";
 
-		// сематниеский анализ
-		SMTCS::Semantics smtcs(lexTable, idTable);
-		smtcs.CheckOperatoinsSemantics();
-		smtcs.CheckFunctionSemantics();
+
+		//// сематниеский анализ
+		//SMTCS::Semantics smtcs(lexTable, idTable);
+		//smtcs.CheckOperatoinsSemantics();
+		//smtcs.CheckFunctionSemantics();
 
 		//вывод IT
 		idTable.PrintTable();

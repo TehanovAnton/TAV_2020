@@ -23,11 +23,25 @@ namespace SMTCS
 	bool Semantics::Check_I_DataTypes(int strtIndx)
 	{
 		IT::IDDATATYPE iddatatype = idTable.table[lexTable.table[strtIndx + 1].idxTI].iddatatype;
+		IT::IDTYPE idtype = idTable.table[lexTable.table[strtIndx + 1].idxTI].idtype;
 		for (int i = ++strtIndx; lexTable.table[i].lexema[0] != LEX_SEMICOLON; i++)
 		{
 			if (lexTable.table[i].lexema[0] == LEX_LITERAL || lexTable.table[i].lexema[0] == LEX_ID)
 			{
-				if (iddatatype == idTable.table[lexTable.table[i].idxTI].iddatatype)
+				bool func = false;
+				for (int e = i; e < lexTable.table[e].lexema[0] != LEX_SEMICOLON; e++)
+				{
+					if (lexTable.table[e].lexema[0] == LEX_ID)
+						if (idTable.table[lexTable.table[e].idxTI].idtype == IT::IDTYPE::F)
+						{
+							func = true; break;
+						}
+				}
+
+				if (func)
+					continue;
+
+				if (iddatatype == idTable.table[lexTable.table[i].idxTI].iddatatype && idtype != IT::IDTYPE::F)
 					continue;
 				else
 					throw ERROR_THROW_IN(120, lexTable.table[i].sn, lexTable.table[i].cn);
@@ -126,19 +140,24 @@ namespace SMTCS
 		bool res = true;
 		for (int i = 0; i < lexTable.posLEX_EQUALSSize; i++)
 		{
-			Check_O_DataTypes(LEX_SEMICOLON, lexTable.posLEX_EQUALS[i]);
-			Check_I_DataTypes(lexTable.posLEX_EQUALS[i]);
+			if (lexTable.posLEX_EQUALS[i] == LEX_EQUAl)
+			{
+				Check_O_DataTypes(LEX_SEMICOLON, lexTable.posLEX_EQUALS[i]);
+				Check_I_DataTypes(lexTable.posLEX_EQUALS[i]);
 
-			int e = lexTable.posLEX_EQUALS[i];
-			IT::IDDATATYPE noOper = idTable.table[lexTable.table[e + 1].idxTI].iddatatype;				  // тип для выражений из одного операнда
-			for (; (lexTable.table[e].lexema[0] != 'v' && lexTable.table[e].lexema[0] != 'w') &&
-				lexTable.table[e].lexema[0] != LEX_SEMICOLON;)	  // до первой операции
-				e++;
+				int e = lexTable.posLEX_EQUALS[i];
+				for (; (lexTable.table[e].lexema[0] != 'v' && lexTable.table[e].lexema[0] != 'w') &&
+					lexTable.table[e].lexema[0] != LEX_SEMICOLON;)	  // до первой операции
+					e++;
 
-			if (lexTable.table[e].lexema[0] == LEX_SEMICOLON)				// выражение не имеет операций
-				Check_Assigment_DataTypes(noOper, lexTable.posLEX_EQUALS[i]);
-			else
-				Check_Assigment_DataTypes(Get_O_retType(lexTable.table[e].oper_v), lexTable.posLEX_EQUALS[i]);
+				if (lexTable.table[e].lexema[0] == LEX_SEMICOLON)				// выражение не имеет операций
+				{
+					IT::IDDATATYPE noOper = idTable.table[lexTable.table[e - 1].idxTI].iddatatype;				  // тип для выражений из одного операнда
+					Check_Assigment_DataTypes(noOper, lexTable.posLEX_EQUALS[i]);
+				}
+				else
+					Check_Assigment_DataTypes(Get_O_retType(lexTable.table[e].oper_v), lexTable.posLEX_EQUALS[i]);
+			}
 		}
 	}
 	///////////////////////////////////////////////////
@@ -180,7 +199,7 @@ namespace SMTCS
 			{
 				idntfctr = idTable.table[lexTable.table[i].idxTI];
 				int funcLTidxDef = idntfctr.idxfirstLE;
-				// сбор типов фактических параметров; от имени функции до закрывающей скобки
+				// сбор типов фактических параметров; от имени функции до откр скобки
 				for (int e = atoi(lexTable.table[i - 1].lexema), m = i - 2; e > 0; e--, m--)
 				{
 					if (lexTable.table[m].lexema[0] == LEX_ID || lexTable.table[m].lexema[0] == LEX_LITERAL)

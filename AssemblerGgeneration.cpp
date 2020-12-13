@@ -527,14 +527,14 @@ namespace AsmGen
 		idtable = pidTable;
 		startPoint = false;
 
-		outFile = std::fstream(pathOutFile, std::ios::out | std::ios::app);
+		/*outFile = std::fstream(pathOutFile, std::ios::out | std::ios::app);
 		if (!outFile.is_open())
-			throw ERROR_THROW_IN(105, -1, -1);		
+			throw ERROR_THROW_IN(105, -1, -1);		*/
 		AssemblerHead();
 		AssemblerConst();
 		AssemblerData();
 		AssemblerCode();
-		outFile.close();
+		/*outFile.close();*/
 	}
 	void Gen::AssemblerHead()
 	{
