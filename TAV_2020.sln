@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TAV_2020", "TAV_2020.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TAV_2020_standartLibary", "TAV_2020_standartLibary\TAV_2020_standartLibary.vcxproj", "{9A09B88A-1B66-4F1B-9043-52B4DF59F64C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "asmlib", "asmlib\asmlib.vcxproj", "{6F883689-ACB1-4EC2-856F-80337B6B9ADB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{9A09B88A-1B66-4F1B-9043-52B4DF59F64C}.Release|x64.Build.0 = Release|x64
 		{9A09B88A-1B66-4F1B-9043-52B4DF59F64C}.Release|x86.ActiveCfg = Release|Win32
 		{9A09B88A-1B66-4F1B-9043-52B4DF59F64C}.Release|x86.Build.0 = Release|Win32
+		{6F883689-ACB1-4EC2-856F-80337B6B9ADB}.Debug|x64.ActiveCfg = Debug|x64
+		{6F883689-ACB1-4EC2-856F-80337B6B9ADB}.Debug|x64.Build.0 = Debug|x64
+		{6F883689-ACB1-4EC2-856F-80337B6B9ADB}.Debug|x86.ActiveCfg = Debug|Win32
+		{6F883689-ACB1-4EC2-856F-80337B6B9ADB}.Debug|x86.Build.0 = Debug|Win32
+		{6F883689-ACB1-4EC2-856F-80337B6B9ADB}.Release|x64.ActiveCfg = Release|x64
+		{6F883689-ACB1-4EC2-856F-80337B6B9ADB}.Release|x64.Build.0 = Release|x64
+		{6F883689-ACB1-4EC2-856F-80337B6B9ADB}.Release|x86.ActiveCfg = Release|Win32
+		{6F883689-ACB1-4EC2-856F-80337B6B9ADB}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -9,6 +9,7 @@
 // таблица проверки входной информации, индекс = код (windows-1251) символа
 // значение IN::F запрещённый символ, IN::T - разрешённый символ, IN::I - игнорировать (не вводить),
 // если 0 <= значение < 256 то вводится данное значение
+
 #define IN_CODE_TABLE {\
 	IN::T, IN::T, IN::T, IN::T, IN::T, IN::T, IN::T, IN::T, IN::T, IN::T, IN::T, IN::T, IN::T, IN::T, IN::T, IN::T, \
 	IN::T, IN::T, IN::T, IN::T, IN::T, IN::T, IN::T, IN::T, IN::T, IN::T, IN::T, IN::T, IN::T, IN::T, IN::T, IN::T, \

@@ -17,13 +17,15 @@ namespace IT
 
 	}
 
-	Entry::Entry(int vintbool, int lexCounter, int& litCounter, IDDATATYPE piddatatype, IDTYPE pidtype)
+	Entry::Entry(char intlit[], int lexCounter, int& litCounter, IDDATATYPE piddatatype, IDTYPE pidtype, char plitNotation)
 	{
 		// имя литерала
 		char buffer[1000];
 		_itoa_s(++litCounter, buffer, 1000, 10);
 		id[0] = 'L';
 		strcopy(id + 1, buffer);
+
+		litТNotation = plitNotation;
 
 		// тип данных; определяется автомату который сработал для предидущей лексемы
 		iddatatype = piddatatype;
@@ -34,8 +36,29 @@ namespace IT
 		// ссылка на LT
 		idxfirstLE = lexCounter - 1;
 
-		// значение по умолчанию
-		piddatatype == IT::INT ? values.vint = vintbool : values.vbool = vintbool;
+		strcopy(values.vint, intlit);
+	}
+
+	Entry::Entry(int vintbool, int lexCounter, int& litCounter, IDDATATYPE piddatatype, IDTYPE pidtype)
+	{
+		// имя литерала
+		char buffer[1000];
+		_itoa_s(++litCounter, buffer, 1000, 10);
+		id[0] = 'L';
+		strcopy(id + 1, buffer);
+
+		litТNotation = '\0';
+
+		// тип данных; определяется по автомату который сработал для предидущей лексемы
+		iddatatype = piddatatype;
+
+		// тип идентификатора
+		idtype = pidtype;
+
+		// ссылка на LT
+		idxfirstLE = lexCounter - 1;
+
+		values.vbool = (bool)vintbool;
 	}
 
 	Entry::Entry(char* vstr, int lexCounter, int& litCounter, IDDATATYPE piddatatype, IDTYPE pidtype)
@@ -55,6 +78,8 @@ namespace IT
 
 		// ссылка на LT
 		idxfirstLE = lexCounter - 1;
+
+		litТNotation = '\0';
 
 		// значение по умолчанию
 		strcopy(values.vste->str, vstr);
@@ -79,6 +104,8 @@ namespace IT
 
 		// ссылка на LT
 		idxfirstLE = lexCounter - 1;
+
+		litТNotation = '\0';
 
 		// значение по умолчанию
 		if (iddatatype == IT::INT)
@@ -109,11 +136,11 @@ namespace IT
 		return idtable.table[n];
 	}
 
-	int IstdIntTLitByValue(IdTable idTable, int value)
+	int IstdIntTLitByValue(IdTable idTable, char* value)
 	{
 		for (size_t i = 0; i < idTable.size; i++)
 		{
-			if (idTable.table[i].idtype == IT::L && idTable.table[i].iddatatype == IT::INT && value == idTable.table[i].values.vint)
+			if (idTable.table[i].idtype == IT::L && idTable.table[i].iddatatype == IT::INT && strcmp(value, idTable.table[i].values.vint) == 0)
 			{
 				return i;
 			}
@@ -202,7 +229,7 @@ namespace IT
 		{
 			if (this->table[i].iddatatype == IT::INT)
 			{
-				std::printf("id: %s, value: %d, idxfirstLE: %d, datatype: INT\n", this->table[i].id, this->table[i].values.vint, this->table[i].idxfirstLE);
+				std::printf("id: %s, value: %s, idxfirstLE: %d, datatype: INT\n", this->table[i].id, this->table[i].values.vint, this->table[i].idxfirstLE);
 			}
 			else if (this->table[i].iddatatype == IT::BOOL)
 			{

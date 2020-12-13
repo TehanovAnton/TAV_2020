@@ -55,8 +55,8 @@ int _tmain(int argc, _TCHAR* argv[])
 		LTITBuilding(lexTable, idTable, resStr);
 
 		//вывод LT
-		/*lexTable.PrintTable();
-		std::cout << "\n\n\n";*/
+		lexTable.PrintTable();
+		std::cout << "\n\n\n";
 
 		////LPLab16
 		//MFST_TRACE_START											   // отладка

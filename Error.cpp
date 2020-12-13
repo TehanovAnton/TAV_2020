@@ -32,7 +32,6 @@ namespace Error
 		ERROR_ENTRY(115, "нераспозноная лексема"),
 		ERROR_ENTRY(116, "необъявленный идентификатор"),
 		ERROR_ENTRY(117, "переопределение main"),
-
 		ERROR_ENTRY_NODEF(118), ERROR_ENTRY_NODEF(119),
 															 
 		ERROR_ENTRY(120, "несоответствие типов операндов в выражении"),			 // ошибки типов, переопределение
@@ -66,6 +65,11 @@ namespace Error
 		ERROR_ENTRY(702, ""),
 		ERROR_ENTRY(703, ""),
 		ERROR_ENTRY(704, ""),
+		ERROR_ENTRY(705, ""),
+		ERROR_ENTRY(706, ""),
+		ERROR_ENTRY(707, ""),
+		ERROR_ENTRY(708, ""),
+		ERROR_ENTRY(709, ""),
 
 		ERROR_ENTRY_NODEF10(800), ERROR_ENTRY_NODEF10(900)
 	};

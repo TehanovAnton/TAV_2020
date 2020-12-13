@@ -130,8 +130,9 @@ namespace SMTCS
 			Check_I_DataTypes(lexTable.posLEX_EQUALS[i]);
 
 			int e = lexTable.posLEX_EQUALS[i];
-			IT::IDDATATYPE noOper = idTable.table[lexTable.table[e + 1].idxTI].iddatatype;
-			for (; lexTable.table[e].lexema[0] != 'v' && lexTable.table[e].lexema[0] != LEX_SEMICOLON;)	  // до первой операции
+			IT::IDDATATYPE noOper = idTable.table[lexTable.table[e + 1].idxTI].iddatatype;				  // тип для выражений из одного операнда
+			for (; (lexTable.table[e].lexema[0] != 'v' && lexTable.table[e].lexema[0] != 'w') &&
+				lexTable.table[e].lexema[0] != LEX_SEMICOLON;)	  // до первой операции
 				e++;
 
 			if (lexTable.table[e].lexema[0] == LEX_SEMICOLON)				// выражение не имеет операций

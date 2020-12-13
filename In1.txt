@@ -1,12 +1,23 @@
 defF IntT f(IntT e)
-  def IntT k = e * 1
-  IF(k < e)
+  def IntT k = 0xee
+  def BoolT r = true
+  r = false
+  RIF(e > 1)
+    e = e - 1
+    def StrT a = '  '
     put 5
   end
+  IF(e > 1)
+    def StrT i = '  '
+    put 5
+  ELS
+    put 7
+    def StrT a = '  '
+  end
+  def StrT l = '  '
   ret k
 end
-
 defF StartPoint
- def BoolT k = true
+ def IntT k = f(3)
  ret 0
 end

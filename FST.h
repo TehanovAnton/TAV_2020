@@ -3,7 +3,13 @@
 #include<stdarg.h>
 #include<tchar.h>
 
-#define NUMLEXEM 31
+#define NUMLEXEM 35
+
+#define ELSKWTOk 4, \
+FST::NODE(1, FST::RELATION('E', 1)),\
+FST::NODE(1, FST::RELATION('L', 2)),\
+FST::NODE(1, FST::RELATION('S', 3)),\
+FST::NODE()
 
 #define IntTKWTOk 5, \
 FST::NODE(1, FST::RELATION('I', 1)),\
@@ -182,11 +188,36 @@ FST::NODE(52, FST::RELATION('a', 1), FST::RELATION('a', 0),\
 	FST::RELATION('z', 1), FST::RELATION('z', 0)),\
 	FST::NODE()
 
-#define IntTLiteralTok 2,\
+#define IntTDecLiteralTok 2,\
 	FST::NODE(20, FST::RELATION('1', 0), FST::RELATION('1', 1),\
 		FST::RELATION('2', 0), FST::RELATION('2', 1), FST::RELATION('3', 0), FST::RELATION('3', 1), FST::RELATION('4', 0), FST::RELATION('4', 1),\
 		FST::RELATION('5', 0), FST::RELATION('5', 1), FST::RELATION('6', 0), FST::RELATION('6', 1), FST::RELATION('7', 0), FST::RELATION('7', 1),\
 		FST::RELATION('8', 0), FST::RELATION('8', 1), FST::RELATION('9', 0), FST::RELATION('9', 1), FST::RELATION('0', 0), FST::RELATION('0', 1)),\
+	FST::NODE()
+
+#define IntTOctLiteralTok 3,\
+	FST::NODE(16, FST::RELATION('1', 0), FST::RELATION('1', 1),\
+		FST::RELATION('2', 0), FST::RELATION('2', 1), FST::RELATION('3', 0), FST::RELATION('3', 1), FST::RELATION('4', 0), FST::RELATION('4', 1),\
+		FST::RELATION('5', 0), FST::RELATION('5', 1), FST::RELATION('6', 0), FST::RELATION('6', 1), FST::RELATION('7', 0), FST::RELATION('7', 1),\
+		FST::RELATION('0', 0), FST::RELATION('0', 1)),\
+	FST::NODE(1, FST::RELATION('q', 2)),\
+	FST::NODE()
+
+#define IntTBinLiteralTok 3,\
+	FST::NODE(4, FST::RELATION('1', 0), FST::RELATION('1', 1),\
+				 FST::RELATION('0', 0), FST::RELATION('0', 1)),\
+	FST::NODE(1, FST::RELATION('b', 2)),\
+	FST::NODE()
+
+#define IntTHexLiteralTok 4,\
+	FST::NODE(1, FST::RELATION('0', 1)),\
+	FST::NODE(1, FST::RELATION('x', 2)),\
+	FST::NODE(32, FST::RELATION('1', 2), FST::RELATION('1', 3),\
+		FST::RELATION('2', 2), FST::RELATION('2', 3), FST::RELATION('3', 2), FST::RELATION('3', 3), FST::RELATION('4', 2), FST::RELATION('4', 3),\
+		FST::RELATION('5', 2), FST::RELATION('5', 3), FST::RELATION('6', 2), FST::RELATION('6', 3), FST::RELATION('7', 2), FST::RELATION('7', 3),\
+		FST::RELATION('8', 2), FST::RELATION('8', 3), FST::RELATION('9', 2), FST::RELATION('9', 3), FST::RELATION('0', 2), FST::RELATION('0', 3),\
+		FST::RELATION('a', 2), FST::RELATION('a', 3), FST::RELATION('b', 2), FST::RELATION('b', 3), FST::RELATION('c', 2), FST::RELATION('c', 3),\
+		FST::RELATION('d', 2), FST::RELATION('d', 3), FST::RELATION('e', 2), FST::RELATION('e', 3), FST::RELATION('f', 2), FST::RELATION('f', 3)),\
 	FST::NODE()
 
 #define StrTLiteralTok 4,\

@@ -1,6 +1,6 @@
 #pragma once
 #define ID_MAXSIZE 5                     // максимальное количество символов в идентификаторе
-#define TI_MAXSIZE 4096                  // максимальное количество строк в таблице идентификатороф
+#define TI_MAXSIZE 1024                  // максимальное количество строк в таблице идентификатороф
 #define TI_INTT_DEFAULT 0x00000000       // значение по умолчанию для типа IntT
 #define TI_STRT_DEFAULT 0x00             // значение по умолчанию для типа StrT
 #define TI_TRUE_VAL 1                // значение по умолчанию для true
@@ -8,6 +8,11 @@
 #define TI_NULLIDX 0xfffffffff           // нет элемента в таблице идентификатора 
 #define TI_STR_MAXSIZE 255
 #define NOVSBAR -1
+#define OCTLITERAL 'q'
+#define DECLITERAL 'd'
+#define HEXLITERAL 'h'
+#define BINLITERAL 'b'
+#define INTTLITLENGTH 20
 #include "LT.h"
 #include<iostream>
 #include "Error.h"
@@ -38,9 +43,10 @@ namespace IT
         char id[ID_MAXSIZE];            // идентификато(автоматически усекается до ID_MAXSIZE)
         IDDATATYPE iddatatype;          // тип данных
         IDTYPE idtype;                  // тип идентификаторов
+        char litТNotation ;                  // обозначение для системы счисления IntT литерала 
         union
         {
-            int vint;                               // значение IntT
+            char* vint = new char[INTTLITLENGTH];                               // значение IntT
             bool vbool;                             // значение BoolT
             struct VStrT                                  // значение StrT
             {
@@ -52,7 +58,9 @@ namespace IT
         visibleArea vsbAr;
 
         Entry();
-        // заполнение IntT и BoolT lit
+        // заполнение IntT
+        Entry(char intlit[], int lexCounter, int& litCounter, IDDATATYPE piddatatype, IDTYPE pidtype, char plitNotation);
+        // заполнение BoolT lit
         Entry(int vintbool, int lexCounter, int& litCounter, IDDATATYPE piddatatype, IDTYPE pidtype);
         // заполнение StrT lit
         Entry(char* vstr, int lexCounter, int& litCounter, IDDATATYPE piddatatype, IDTYPE pidtype);
@@ -94,7 +102,7 @@ namespace IT
 
     int IstdBoolTLitByValue(IdTable idTable, bool value);
 
-    int IstdIntTLitByValue(IdTable idTable, int value);
+    int IstdIntTLitByValue(IdTable idTable, char* value);
 
     int IstdByID(IdTable idTable, char value[]);
 

@@ -13,14 +13,18 @@ namespace AsmGen
 		std::fstream outFile;
 		Gen(LT::LexTable plextable, IT::IdTable pidTable, const char* pathOutFile);
 
+		bool startPoint;
+
 		void AssemblerHead();
 		void AssemblerConst();
 		void AssemblerData();
 		void AssemblerCode();	
-		void BodyOfStructures(char* funcProcName, int& indOflex, int& i);
-		void BodyOfRIF_If(int& i);
-		void GenBoolExpresion_RIF_IF(int& i);
-		void FindElse(int& i);
+		void BodyOfFunctions(char* funcProcName, int& indOflex, int& i);
+		void BodyOf_IF(int& i, bool ELS = false);
+		void GenBoolExpresion_IF(int& i);
+		void BodyOf_RIF(int& i);
+		void GenBoolExpresion_RIF(int& i);
 		void GenPut(int& i);
+		void GenProto(int i);
 	};
 }
