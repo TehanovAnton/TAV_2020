@@ -145,6 +145,9 @@
   <ItemGroup>
     <ClInclude Include="TAV_2020_standartLibary.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="TAV_2020_standartLibary.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

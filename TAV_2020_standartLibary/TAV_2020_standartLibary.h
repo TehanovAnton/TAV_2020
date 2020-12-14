@@ -2,7 +2,6 @@
 #include<iostream>
 extern "C"
 {
-	int _stdcall strlength(const char* str);
-	char* _stdcall substr(const char* str, int begin, int end);
-	bool _stdcall strcompare(const char* str1, const char* str2);
+	int _stdcall compare(const char* str1, const char* str2);
+	char* _stdcall concat(const char* str1, const char* str2);
 }

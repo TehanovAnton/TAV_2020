@@ -78,9 +78,9 @@ int _tmain(int argc, _TCHAR* argv[])
 
 
 		//// сематниеский анализ
-		//SMTCS::Semantics smtcs(lexTable, idTable);
-		//smtcs.CheckOperatoinsSemantics();
-		//smtcs.CheckFunctionSemantics();
+		SMTCS::Semantics smtcs(lexTable, idTable);
+		smtcs.CheckOperatoinsSemantics();
+		smtcs.CheckFunctionSemantics();
 
 		//вывод IT
 		idTable.PrintTable();

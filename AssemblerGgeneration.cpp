@@ -141,7 +141,7 @@ namespace AsmGen
 					{
 						std::cout << "\tpop ebx\n";
 						std::cout << "\tpop eax\n";
-
+						
 						if (lextable.table[i].oper_v == '+')		  // достать из стека, сложить
 							std::cout << "\tadd eax, ebx\n";
 
@@ -149,10 +149,20 @@ namespace AsmGen
 							std::cout << "\tsub eax, ebx\n";
 
 						if (lextable.table[i].oper_v == '*')	    // достать из стека, перемножить
-							std::cout << "\tmul ebx\n";
+							std::cout << "\tcdq\tmul ebx\n";
 
 						if (lextable.table[i].oper_v == '/')	    // достать из стека, перемножить
-							std::cout << "\tcdq\n\tdiv ebx\n";
+							std::cout << "\tcdq\n\tidiv ebx\n";
+
+						if (lextable.table[i].oper_v == '%')
+						{
+							std::cout << "\tcdq\n\tidiv ebx\n";
+							std::cout << "mod" << lextable.table[i].sn << lextable.table[i].cn << ":\n";
+							std::cout << "\tneg edx\n";
+							std::cout << "\tcmp edx, 0\n";
+							std::cout << "jl mod" << lextable.table[i].sn << lextable.table[i].cn << ":\n";
+							std::cout << "\tmov eax, edx\n";
+						}
 
 						if (lextable.table[i].oper_v == '>')	    // >
 						{
@@ -327,6 +337,16 @@ namespace AsmGen
 						if (lextable.table[i].oper_v == '/')	    // достать из стека, перемножить
 							std::cout << "\tcdq\n\tdiv ebx\n";
 
+						if (lextable.table[i].oper_v == '%')
+						{
+							std::cout << "\tcdq\n\tidiv ebx\n";
+							std::cout << "mod" << lextable.table[i].sn << lextable.table[i].cn << ":\n";
+							std::cout << "\tneg edx\n";
+							std::cout << "\tcmp edx, 0\n";
+							std::cout << "jl mod" << lextable.table[i].sn << lextable.table[i].cn << ":\n";
+							std::cout << "\tmov eax, edx";
+						}
+
 						if (lextable.table[i].oper_v == '>')	    // >
 						{
 							std::cout << "\tcmp eax,ebx\n";
@@ -435,6 +455,16 @@ namespace AsmGen
 
 						if (lextable.table[i].oper_v == '/')	    // достать из стека, перемножить
 							std::cout << "\tcdq\n\tdiv ebx\n";
+
+						if (lextable.table[i].oper_v == '%')
+						{
+							std::cout << "\tcdq\n\tidiv ebx\n";
+							std::cout << "modul" << lextable.table[i].sn << lextable.table[i].cn << ":\n";
+							std::cout << "\tneg edx\n";
+							std::cout << "\tcmp edx, 0\n";
+							std::cout << "jl modul" << lextable.table[i].sn << lextable.table[i].cn << ":\n";
+							std::cout << "\tmov eax, edx\n";
+						}
 
 						if (lextable.table[i].oper_v == '>')	    // >
 						{
@@ -553,9 +583,8 @@ namespace AsmGen
 		std::cout << "\tprintconsole PROTO : SDWORD, : SDWORD\n";
 		std::cout << "\tint_to_char PROTO : SDWORD, : SDWORD\n\n";
 
-		std::cout << "\tstrlength PROTO :SDWORD\n";		// заголовки функций из стандартонй библиотеки
-		std::cout << "\tsubstr PROTO :SDWORD\n";
-		std::cout << "\tstrcompare PROTO :SDWORD, :SDWORD\n";
+		std::cout << "\tconcat PROTO :SDWORD\n";		// заголовки функций из стандартонй библиотеки
+		std::cout << "\tcompare PROTO :SDWORD\n";
 
 		std::cout << "\n.stack 4096\n";
 	}

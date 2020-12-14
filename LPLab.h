@@ -138,9 +138,9 @@ bool FillIT(LT::LexTable& lexTable, IT::IdTable& idTable, IT::Entry& entryI, int
 		lexTable.table[lexTable.size - 1].idxTI = idTable.size;
 	}
 	// литерал
-	else if (currentToken >= 3 && currentToken <= 10)
+	else if (currentToken >= 3 && currentToken <= 5)
 	{
-		if (currentToken >= 5 && currentToken <= 8) // IntT literal
+		if (currentToken >= 4 && currentToken <= 5) // IntT literal
 		{
 			// найден такой же int literal
 			if (IT::IstdIntTLitByValue(idTable, lexem) != (int)TI_NULLIDX)

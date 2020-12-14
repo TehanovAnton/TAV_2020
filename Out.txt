@@ -1,4 +1,5 @@
 proc inttype conditionaloperator(inttype x,inttype y)
+def inttype w=5 % 3
 if(x<y)
 out 'x less then y'
 else
@@ -36,6 +37,6 @@ end
 proc StartPoint
 def inttype firstres=conditionaloperator(1,2)
 def inttype secondres=arithmeticoperations(7,2)
-fstandlib('andrewtehanov')
+def inttype i=fstandlib('andrewtehanov')
 ret 0
 end
