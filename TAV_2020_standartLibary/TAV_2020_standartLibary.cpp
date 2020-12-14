@@ -2,7 +2,7 @@
 #include<stdio.h>
 extern "C"
 {
-	int _stdcall compa(const char* str1, const char* str2)
+	int _stdcall compa(char* str1, char* str2)
 	{
 		bool res = false;
 		int len1 = strlen(str1);
@@ -16,24 +16,24 @@ extern "C"
 		return res;
 	}
 
-	char* _stdcall conca(const char* str1, const char* str2)
+	void _stdcall printCons(char* str)
 	{
-		int str1len = strlen(str1), str2len = strlen(str2);
-		if (str1len != 0 && str2len != 0)
-		{
-			char* res = new char[str1len + str2len + 1];
-			int i = 0;
-			for (; i < str1len; i++)
-			{
-				res[i] = str1[i];
-			}
-			for (int e = 0; e < str2len; i++, e++)
-			{
-				res[i] = str2[e];
-			}
-			res[i] = '\0';
-			return res;
-		}
-		return new char[] {""};
+		std::cout << str << "\n";
+	}
+
+	char* _stdcall conca(char* str1, char* str2)
+	{
+		char* buffer = reinterpret_cast<char*>(calloc(strlen(str1) + strlen(str2) + 1, sizeof(char)));
+
+		if (buffer == nullptr)
+			return 0;
+
+		for (int i = 0; str1[i]; ++i)
+			buffer[i] = str1[i];
+
+		for (int i = 0; str2[i]; ++i)
+			buffer[i + strlen(str1)] = str2[i];
+
+		return buffer;
 	}
 }

@@ -16,6 +16,7 @@
 
 	conca PROTO : SDWORD, : SDWORD
 	compa PROTO : SDWORD, : SDWORD
+printCons PROTO : SDWORD
 
 .stack 4096
 .const
@@ -52,9 +53,32 @@
 
 .code
 condi PROTO :SDWORD, :SDWORD
+arith PROTO :SDWORD, :SDWORD
+fstan PROTO :SDWORD
+main PROC
+	push L13
+	push L14
+	call condi
+	push eax
+	pop first177213
+
+	push L14
+	push L15
+	call arith
+	push eax
+	pop secon177213
+
+	push offset L16
+	call fstan
+	push eax
+	pop i177213
+
+	push L5
+	call ExitProcess
+main ENDP
 condi PROC x:SDWORD, y:SDWORD
-	push offset L1
-	push offset L2
+	push L1
+	push L2
 	pop ebx
 	pop eax
 	cdq
@@ -72,41 +96,40 @@ jl modul220
 	pop ebx
 	pop eax
 cmp eax,ebx
-	jb is37
+	jl is32
 	jmp els32
-is37:
-	push offset ConsoleTitle
+is32:
 	push offset L3
-	call printconsole
+	call printCons
+	jmp continue32
 els32:
-	push offset ConsoleTitle
 	push offset L4
-	call printconsole
+	call printCons
+continue32:
 
 	push x
 	push y
 	pop ebx
 	pop eax
 cmp eax,ebx
-	ja is87
+	jg is82
 	jmp els82
-is87:
-	push offset ConsoleTitle
+is82:
 	push offset L4
-	call printconsole
+	call printCons
+	jmp continue82
 els82:
-	push offset ConsoleTitle
 	push offset L3
-	call printconsole
+	call printCons
+continue82:
 
 	mov eax,L5
 	ret
 condi ENDP
 
-arith PROTO :SDWORD, :SDWORD
 arith PROC x:SDWORD, y:SDWORD
-	push offset L6
-	push offset L7
+	push L6
+	push L7
 	pop ebx
 	pop eax
 	add eax, ebx
@@ -114,11 +137,15 @@ arith PROC x:SDWORD, y:SDWORD
 	pop add60127
 
 	push add60127
+cld
+	mov edi, offset result
+	mov ecx, 100
+	sub al, al
+	rep stosb
 	push offset result
 	call int_to_char
-	push offset ConsoleTitle
 	push offset result
-	call printconsole
+	call printCons
 	push x
 	push y
 	pop ebx
@@ -128,11 +155,15 @@ arith PROC x:SDWORD, y:SDWORD
 	pop sub60127
 
 	push sub60127
+cld
+	mov edi, offset result
+	mov ecx, 100
+	sub al, al
+	rep stosb
 	push offset result
 	call int_to_char
-	push offset ConsoleTitle
 	push offset result
-	call printconsole
+	call printCons
 	push x
 	push y
 	pop ebx
@@ -142,26 +173,34 @@ arith PROC x:SDWORD, y:SDWORD
 	pop mult60127
 
 	push mult60127
+cld
+	mov edi, offset result
+	mov ecx, 100
+	sub al, al
+	rep stosb
 	push offset result
 	call int_to_char
-	push offset ConsoleTitle
 	push offset result
-	call printconsole
-	push offset L8
-	push offset L9
+	call printCons
+	push L8
+	push L9
 	pop ebx
 	pop eax
 	cdq
-	div ebx
+	idiv ebx
 	push eax
 	pop div60127
 
 	push div60127
+cld
+	mov edi, offset result
+	mov ecx, 100
+	sub al, al
+	rep stosb
 	push offset result
 	call int_to_char
-	push offset ConsoleTitle
 	push offset result
-	call printconsole
+	call printCons
 	push x
 	push y
 	pop ebx
@@ -177,67 +216,50 @@ jl modul2425
 	pop modul60127
 
 	push modul60127
+cld
+	mov edi, offset result
+	mov ecx, 100
+	sub al, al
+	rep stosb
 	push offset result
 	call int_to_char
-	push offset ConsoleTitle
 	push offset result
-	call printconsole
+	call printCons
 	mov eax,L5
 	ret
 arith ENDP
 
-fstan PROTO :SDWORD
 fstan PROC s:SDWORD
-	push scnct131174
-	push scnct131174
+	push s
+	push s
 	call conca
 	push eax
 	pop scnct131174
 
-	push offset ConsoleTitle
 	push offset L10
-	call printconsole
-	push offset ConsoleTitle
-	push offset scnct131174
-	call printconsole
-	push scmpr131174
+	call printCons
+	push scnct131174
+	call printCons
+	push s
 	push offset L11
 	call compa
 	push eax
 	pop scmpr131174
 
-	push offset ConsoleTitle
 	push offset L12
-	call printconsole
+	call printCons
 	push scmpr131174
+cld
+	mov edi, offset result
+	mov ecx, 100
+	sub al, al
+	rep stosb
 	push offset result
 	call int_to_char
-	push offset ConsoleTitle
 	push offset result
-	call printconsole
+	call printCons
 	mov eax,L5
 	ret
 fstan ENDP
 
-main PROC
-	push offset L13
-	push offset L14
-	call condi
-	push eax
-	pop first177213
-
-	push offset L15
-	push offset L14
-	call arith
-	push eax
-	pop secon177213
-
-	push offset L16
-	call fstan
-	push eax
-	pop i177213
-
-	push L5
-	call ExitProcess
-main ENDP
 end main

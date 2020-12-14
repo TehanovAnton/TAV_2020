@@ -36,7 +36,7 @@ proc strtype fstandlib(strtype s)
 end
 proc StartPoint
 	def inttype firstres = conditionaloperator(1, 2)
-        def inttype secondres = arithmeticoperations(7, 2)
+        def inttype secondres = arithmeticoperations(2, 7)
 	def inttype i = fstandlib('andrewtehanov')
 	ret 0
 end

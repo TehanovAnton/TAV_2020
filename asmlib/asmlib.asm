@@ -8,6 +8,7 @@ SetConsoleTitleA PROTO : SDWORD
 GetStdHandle PROTO : SDWORD
 
 .code
+
 int_to_char PROC uses eax ebx ecx edi esi,
 	pstr : sdword,		; адрес строки возврата 
 	intfield : sdword	; число для преобразования
@@ -44,8 +45,8 @@ write:
 int_to_char ENDP
 
 printconsole PROC uses eax ebx ecx edi esi,
-	pstr :dword,
-	ptitle :dword
+	pstr :sdword,
+	ptitle :sdword
 
 	push ptitle
 	call SetConsoleTitleA
