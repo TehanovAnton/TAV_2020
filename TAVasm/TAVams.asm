@@ -6,7 +6,7 @@
 	ExitProcess PROTO :SDWORD
 
 	includelib ..\Debug\TAV_2020_standartLibary.lib
-	includelib ..\asmlib.lib
+	includelib ..\Debug\asmlib.lib
 
 	WriteConsoleA PROTO : SDWORD, : SDWORD, : SDWORD, : SDWORD, : SDWORD
 	SetConsoleTitleA PROTO : SDWORD
@@ -14,8 +14,8 @@
 	printconsole PROTO : SDWORD, : SDWORD
 	int_to_char PROTO : SDWORD, : SDWORD
 
-	concat PROTO :SDWORD
-	compare PROTO :SDWORD
+	conca PROTO : SDWORD, : SDWORD
+	compa PROTO : SDWORD, : SDWORD
 
 .stack 4096
 .const
@@ -24,10 +24,10 @@
 	L3 SBYTE 'x less then y', 0
 	L4 SBYTE 'x more then y', 0
 	L5 SDWORD 0
-	L6 SDWORD 0xa
-	L7 SDWORD 0x1
-	L8 SDWORD 0xd
-	L9 SDWORD 0x2
+	L6 SDWORD 0ah
+	L7 SDWORD 1h
+	L8 SDWORD 0dh
+	L9 SDWORD 2h
 	L10 SBYTE 'strings concatenation:', 0
 	L11 SBYTE 'l', 0
 	L12 SBYTE 'string comparison:', 0
@@ -36,12 +36,12 @@
 	L15 SDWORD 7
 	L16 SBYTE 'andrewtehanov', 0
 .data
-	w2-1 SDWORD ?
-	add60-1 SDWORD ?
-	sub60-1 SDWORD ?
-	mult60-1 SDWORD ?
-	div60-1 SDWORD ?
-	modul60-1 SDWORD ?
+	w256 SDWORD ?
+	add60127 SDWORD ?
+	sub60127 SDWORD ?
+	mult60127 SDWORD ?
+	div60127 SDWORD ?
+	modul60127 SDWORD ?
 	scnct131174 SDWORD ?
 	scmpr131174 SDWORD ?
 	first177213 SDWORD ?
@@ -62,10 +62,10 @@ condi PROC x:SDWORD, y:SDWORD
 modul220:
 	neg edx
 	cmp edx, 0
-jl modul220:
+jl modul220
 	mov eax, edx
 	push eax
-	pop w
+	pop w256
 
 	push x
 	push y
@@ -73,13 +73,13 @@ jl modul220:
 	pop eax
 cmp eax,ebx
 	jb is37
-	jmp els37
+	jmp els32
 is37:
-	push offset ConsleTitle
+	push offset ConsoleTitle
 	push offset L3
 	call printconsole
 els32:
-	push offset ConsleTitle
+	push offset ConsoleTitle
 	push offset L4
 	call printconsole
 
@@ -89,13 +89,13 @@ els32:
 	pop eax
 cmp eax,ebx
 	ja is87
-	jmp els87:
+	jmp els82
 is87:
-	push offset ConsleTitle
+	push offset ConsoleTitle
 	push offset L4
 	call printconsole
 els82:
-	push offset ConsleTitle
+	push offset ConsoleTitle
 	push offset L3
 	call printconsole
 
@@ -111,12 +111,12 @@ arith PROC x:SDWORD, y:SDWORD
 	pop eax
 	add eax, ebx
 	push eax
-	pop add
+	pop add60127
 
-	push add
+	push add60127
 	push offset result
 	call int_to_char
-	push offset ConsleTitle
+	push offset ConsoleTitle
 	push offset result
 	call printconsole
 	push x
@@ -125,12 +125,12 @@ arith PROC x:SDWORD, y:SDWORD
 	pop eax
 	sub eax, ebx
 	push eax
-	pop sub
+	pop sub60127
 
-	push sub
+	push sub60127
 	push offset result
 	call int_to_char
-	push offset ConsleTitle
+	push offset ConsoleTitle
 	push offset result
 	call printconsole
 	push x
@@ -139,12 +139,12 @@ arith PROC x:SDWORD, y:SDWORD
 	pop eax
 	mul ebx
 	push eax
-	pop mult
+	pop mult60127
 
-	push mult
+	push mult60127
 	push offset result
 	call int_to_char
-	push offset ConsleTitle
+	push offset ConsoleTitle
 	push offset result
 	call printconsole
 	push offset L8
@@ -154,12 +154,12 @@ arith PROC x:SDWORD, y:SDWORD
 	cdq
 	div ebx
 	push eax
-	pop div
+	pop div60127
 
-	push div
+	push div60127
 	push offset result
 	call int_to_char
-	push offset ConsleTitle
+	push offset ConsoleTitle
 	push offset result
 	call printconsole
 	push x
@@ -171,15 +171,15 @@ arith PROC x:SDWORD, y:SDWORD
 modul2425:
 	neg edx
 	cmp edx, 0
-jl modul2425:
+jl modul2425
 	mov eax, edx
 	push eax
-	pop modul
+	pop modul60127
 
-	push modul
+	push modul60127
 	push offset result
 	call int_to_char
-	push offset ConsleTitle
+	push offset ConsoleTitle
 	push offset result
 	call printconsole
 	mov eax,L5
@@ -188,31 +188,31 @@ arith ENDP
 
 fstan PROTO :SDWORD
 fstan PROC s:SDWORD
-	push scnct
-	push scnct
+	push scnct131174
+	push scnct131174
 	call conca
 	push eax
-	pop scnct
+	pop scnct131174
 
-	push offset ConsleTitle
+	push offset ConsoleTitle
 	push offset L10
 	call printconsole
-	push offset ConsleTitle
-	push offset scnct
+	push offset ConsoleTitle
+	push offset scnct131174
 	call printconsole
-	push scmpr
+	push scmpr131174
 	push offset L11
 	call compa
 	push eax
-	pop scmpr
+	pop scmpr131174
 
-	push offset ConsleTitle
+	push offset ConsoleTitle
 	push offset L12
 	call printconsole
-	push scmpr
+	push scmpr131174
 	push offset result
 	call int_to_char
-	push offset ConsleTitle
+	push offset ConsoleTitle
 	push offset result
 	call printconsole
 	mov eax,L5
@@ -224,18 +224,18 @@ main PROC
 	push offset L14
 	call condi
 	push eax
-	pop first
+	pop first177213
 
 	push offset L15
 	push offset L14
 	call arith
 	push eax
-	pop secon
+	pop secon177213
 
 	push offset L16
 	call fstan
 	push eax
-	pop i
+	pop i177213
 
 	push L5
 	call ExitProcess

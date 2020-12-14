@@ -587,7 +587,7 @@ void set_aB(LT::LexTable lexTable, IT::IdTable& idTable, int& lstChngId, int aB,
 		{
 			if (elLT.lexema[0] == LEX_ID)
 			{ 
-				if (idTable.table[elLT.idxTI].vsbAr.aB == NOVSBAR && idTable.table[elLT.idxTI].idtype == IT::IDTYPE::V || idTable.table[elLT.idxTI].idtype == IT::IDTYPE::P)
+				if (idTable.table[elLT.idxTI].vsbAr.aB == NOVSBAR && idTable.table[elLT.idxTI].idtype == IT::IDTYPE::V)
 				{
 					idTable.table[elLT.idxTI].vsbAr.aB = aB;
 					lstChngId = elLT.idxTI;
@@ -633,12 +633,12 @@ void exposingNamespaces(LT::LexTable lexTable, IT::IdTable& idTable)
 		LT::Entry elLT = lexTable.table[i];
 		if (elLT.lexema[0] == LEX_ID && lexTable.table[i - 2].lexema[0] == LEX_DEFF ||
 			elLT.lexema[0] == LEX_STARTPOINT ||
-			elLT.lexema[0] == LEX_IF || elLT.lexema[0] == LEX_RIF)
+			elLT.lexema[0] == LEX_IF)
 		{
 			int aB = i;
 			set_aB(lexTable, idTable, lasatChangedIdentificator, aB, i);
 
-			set_aE(idTable, lasatChangedIdentificator, aB, i);
+			set_aE(idTable, lasatChangedIdentificator, aB, i);			
 		}
 	}
 
@@ -650,7 +650,7 @@ void exposingNamespaces(LT::LexTable lexTable, IT::IdTable& idTable)
 		{
 			if (!(elIT.vsbAr != idTable.table[e].vsbAr) && elIT.idtype == idTable.table[e].idtype)
 			{
-				if (strcamper(elIT.id, idTable.table[e].id) && elIT.vsbAr <= idTable.table[e].vsbAr)
+				if (strcamper(elIT.id, idTable.table[e].id) && elIT.vsbAr <= idTable.table[e].vsbAr && idTable.table[e].idtype != IT::IDTYPE::P)
 				{
 					printf("\n\n???: %s :???", elIT.id);
 					throw ERROR_THROW_IN(125, lexTable.positions[elIT.idxfirstLE - 1].line, lexTable.positions[elIT.idxfirstLE - 1].colone)			

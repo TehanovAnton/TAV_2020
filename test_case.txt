@@ -13,13 +13,13 @@ proc inttype conditionaloperator(inttype x, inttype y)
 	ret 0
 end
 proc inttype arithmeticoperations(inttype x, inttype y)
-	def inttype add = 0xa + 0x1
+	def inttype add = 0ah + 1h
 	out add
 	def inttype sub = x - y
 	out sub
 	def inttype mult = x * y
 	out mult
-	def inttype div = 0xd / 0x2
+	def inttype div = 0dh / 2h
 	out div
 	def inttype modulo = x % y
 	out modulo

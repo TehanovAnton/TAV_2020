@@ -2,7 +2,7 @@
 #include<stdio.h>
 extern "C"
 {
-	int _stdcall compare(const char* str1, const char* str2)
+	int _stdcall compa(const char* str1, const char* str2)
 	{
 		bool res = false;
 		int len1 = strlen(str1);
@@ -16,7 +16,7 @@ extern "C"
 		return res;
 	}
 
-	char* _stdcall concat(const char* str1, const char* str2)
+	char* _stdcall conca(const char* str1, const char* str2)
 	{
 		int str1len = strlen(str1), str2len = strlen(str2);
 		if (str1len != 0 && str2len != 0)

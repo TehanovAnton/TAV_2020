@@ -2,6 +2,6 @@
 #include<iostream>
 extern "C"
 {
-	int _stdcall compare(const char* str1, const char* str2);
-	char* _stdcall concat(const char* str1, const char* str2);
+	int _stdcall compa(const char* str1, const char* str2);
+	char* _stdcall conca(const char* str1, const char* str2);
 }
