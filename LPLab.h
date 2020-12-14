@@ -575,7 +575,7 @@ void set_aB(LT::LexTable lexTable, IT::IdTable& idTable, int& lstChngId, int aB,
 		LT::Entry elLT = lexTable.table[i];
 		// обработка вложенной области видимости 
 		if (elLT.lexema[0] == LEX_ID && lexTable.table[i - 2].lexema[0] == LEX_DEFF || elLT.lexema[0] == LEX_STARTPOINT ||
-			elLT.lexema[0] == LEX_IF || elLT.lexema[0] == LEX_RIF || lexTable.table[i - 1].lexema[0] == LEX_ElS)
+			elLT.lexema[0] == LEX_IF || lexTable.table[i - 1].lexema[0] == LEX_ElS)
 		{
 			set_aB(lexTable, idTable, lstChngId, i, aE);			
 

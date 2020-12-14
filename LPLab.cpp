@@ -4,7 +4,7 @@
 #include"MFST.h"
 #include"Semantics.h"
 
-#define TAVasmOutFile "C:\\Users\\Anton\\source\\repos\\programming languages\\TAV_2020\\TAVams.txt"
+#define TAVasmOutFile "..\\TAV_2020\\TAVasm\\TAVams.asm"
 
 #define LPLab 1	
 int _tmain(int argc, _TCHAR* argv[])
