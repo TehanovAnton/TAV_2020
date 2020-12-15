@@ -1,4 +1,8 @@
+proc strtype concat(strtype s,strtype s)
+proc inttype compa(strtype s,strtype s)
 proc inttype conditionaloperator(inttype x, inttype y)
+	def strtype res = concat('a', 'l')
+	def inttype r = compa('a', 'l')
 	def inttype w = 5 % 3
 	if(x < y)
 		out 'x less then y'

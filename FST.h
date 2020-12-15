@@ -3,7 +3,7 @@
 #include<stdarg.h>
 #include<tchar.h>
 
-#define NUMLEXEM 29
+#define NUMLEXEM 27
 
 #define ELSKWTOk 5, \
 FST::NODE(1, FST::RELATION('e', 1)),\

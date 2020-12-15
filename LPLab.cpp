@@ -63,10 +63,10 @@ int _tmain(int argc, _TCHAR* argv[])
 
 
 		////LPLab16
-		//MFST_TRACE_START											   // отладка
-		//MFST::Mfst mfst(lexTable, GRB::getGreibach());			   // автомат
-		//mfst.start();												   // старт синтаксического анализа
-		//mfst.printrules();
+		MFST_TRACE_START											   // отладка
+		MFST::Mfst mfst(lexTable, GRB::getGreibach());			   // автомат
+		mfst.start();												   // старт синтаксического анализа
+		mfst.printrules();
 
 		////LPLab15
 		exposingNamespaces(lexTable, idTable);

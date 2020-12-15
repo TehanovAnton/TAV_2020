@@ -203,14 +203,21 @@ namespace SMTCS
 			// вызываемые функции
 			if (lexTable.table[i].lexema[0] == LEX_ID &&
 				idTable.table[lexTable.table[i].idxTI].idtype == IT::IDTYPE::F &&
-				idTable.table[lexTable.table[i].idxTI].idxfirstLE != i)
+				lexTable.table[i-2].lexema[0] != LEX_DEFF)
 			{
-				int funcLTidxDef = idTable.table[lexTable.table[i].idxTI].idxfirstLE;
-
-				// пропуск библиотечных функций
-				if (!(bool)strcmp(idTable.table[lexTable.table[i].idxTI].id, "conca") ||
-					!(bool)strcmp(idTable.table[lexTable.table[i].idxTI].id, "compa"))
-					continue;
+				int funcLTidxDef;
+				for (int l = 0; l < lexTable.size; l++)
+				{
+					if (lexTable.table[l].lexema[0] == LEX_ID &&
+						idTable.table[lexTable.table[l].idxTI].idtype == IT::IDTYPE::F &&
+						lexTable.table[l - 2].lexema[0] == LEX_DEFF)
+					{
+						if (strcmp(idTable.table[lexTable.table[i].idxTI].id, idTable.table[lexTable.table[l].idxTI].id) == 0)
+						{
+							funcLTidxDef = l; break;
+						}
+					}
+				}
 
 				// сбор типов фактических параметров; от имени функции до откр скобки
 				// m индекс параметров, e количество параметров

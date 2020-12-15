@@ -366,7 +366,7 @@ bool parsingLexem(char lexem[], LT::LexTable& lexTable, IT::IdTable& idTable, LT
 		retKeyWord,				putKeyWord,			endL,				leftBracetL,	rightBracetL,
 		IFKeyWord,				commaL, 			plusL,				minusL,			multiplicationL,
 		lessL,					boolequalL,			devisionL,			equalL,			newlineKeyWord,
-		ConcatStd,				CompareStd,			moduloL,			identificator};
+		moduloL,			identificator};
 
 	char shortLexm[NUMLEXEM] = 
 		{ LEX_ID,		LEX_STRT,			LEX_INTT,		LEX_LITERAL,	LEX_LITERAL,
@@ -374,7 +374,7 @@ bool parsingLexem(char lexem[], LT::LexTable& lexTable, IT::IdTable& idTable, LT
 		LEX_RET,		LEX_PUT,			LEX_END,		LEX_LEFTHESIS,	LEX_RIGHTHESIS,
 		LEX_IF,			LEX_COMMA,			LEX_PLUS,		LEX_MINUS,		LEX_STAR,
 		LEX_LESS,		LEX_BOOLEAQUl,		LEX_DIRSLASH,	LEX_EQUAl,		LEX_NEWLINE,
-		LEX_ID,			LEX_ID,				LEX_MODULOL,	LEX_ID};
+		LEX_MODULOL,	LEX_ID};
 
 	for (int i = 0; i < NUMLEXEM; i++)
 	{
@@ -394,34 +394,6 @@ bool parsingLexem(char lexem[], LT::LexTable& lexTable, IT::IdTable& idTable, LT
 			if (shrtLex[0] == LEX_LEFTHESIS &&
 				lexTable.table[lexTable.size - 1].lexema[0] == LEX_IF || lexTable.table[lexTable.size - 1].lexema[0] == LEX_RIF)
 				lexTable.posLEX_EQUALS[lexTable.posLEX_EQUALSSize++] = lexTable.size;
-
-			if (i == 25 || i == 26  && IT::IstdByID(idTable, entryI.id) == (int)TI_NULLIDX)
-			{
-				LT::Entry stdLib = entryL = LT::Entry('\0', shrtLex[0], line, LT_TILNULLIDX);
-				stdLib.sn = line, stdLib.cn = 0, stdLib.idxTI = idTable.size, stdLib.lexema[0] = LEX_ID, stdLib.oper_v = '\0';
-				LT::Add(lexTable, stdLib);
-
-				if (i == 25)
-				{									
-					IT::Entry stdIDLib = IT::Entry(lexem, lexCounter, IT::IDDATATYPE::STR, IT::IDTYPE::F);
-					IT::Add(idTable, stdIDLib, lexTable.positions[lexCounter - 1].line, lexTable.positions[lexCounter - 1].colone);
-				}
-				else
-				{
-					IT::Entry  stdIDLib = IT::Entry(lexem, lexCounter, IT::IDDATATYPE::INT, IT::IDTYPE::F);
-					IT::Add(idTable, stdIDLib, lexTable.positions[lexCounter - 1].line, lexTable.positions[lexCounter - 1].colone);
-				}
-
-				preLastToken = lastToken;
-				lastToken = i;
-
-				return true;
-			}
-			else if(i == 25 || i == 26 && IT::IstdByID(idTable, entryI.id) != (int)TI_NULLIDX)
-			{
-				lexTable.table[lexTable.size - 1].idxTI = IT::IstdFromCurrent(idTable, IdbyLexem(lexem));
-				return true;
-			}
 
 			FillLT(lexTable, entryL,  lexem, shrtLex, line);
 
