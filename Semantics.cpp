@@ -171,7 +171,7 @@ namespace SMTCS
 	}
 	///////////////////////////////////////////////////
 
-	bool Semantics::CheckFunctionParms(std::queue<IT::IDDATATYPE> types, int indx)
+	bool Semantics::CheckFunctionParms(std::stack<IT::IDDATATYPE> types, int indx)
 	{
 		bool res = true;
 		int i = indx + 1;
@@ -179,7 +179,7 @@ namespace SMTCS
 		{
 			if (lexTable.table[i].lexema[0] == 't' && !types.empty())
 			{
-				res &= idTable.table[lexTable.table[i + 1].idxTI].iddatatype == types.front();
+				res &= idTable.table[lexTable.table[i + 1].idxTI].iddatatype == types.top();
 				types.pop();
 
 				if (res)
@@ -221,7 +221,7 @@ namespace SMTCS
 
 				// сбор типов фактических параметров; от имени функции до откр скобки
 				// m индекс параметров, e количество параметров
-				std::queue<IT::IDDATATYPE> types;
+				std::stack<IT::IDDATATYPE> types;
 				for (int e = atoi(lexTable.table[i - 1].lexema), m = i - 2; e > 0; e--, m--)
 				{
 					if (lexTable.table[m].lexema[0] == LEX_ID || lexTable.table[m].lexema[0] == LEX_LITERAL)

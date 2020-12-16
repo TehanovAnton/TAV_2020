@@ -27,8 +27,9 @@ namespace AsmGen
 		void BodyOf_IF(int& i, int preifLex = 0, bool ELS = false);
 		void GenBoolExpresion_IF(int& i);
 		void BodyOf_RIF(int& i);
-		void GenBoolExpresion_RIF(int& i);
+		void GenBoolExpresion_RIF(int& i, int riflex);
 		void GenPut(int& i);
 		void GenProto(int i);
+		bool IsProto(int i);
 	};
 }

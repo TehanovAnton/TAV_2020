@@ -26,7 +26,7 @@ namespace Error
 
 		ERROR_ENTRY(110, ""),  													// ошибки лексического анализа
 		ERROR_ENTRY(111, "недопустимый символ в исходном файле (-in)"),
-		ERROR_ENTRY(112, ""),
+		ERROR_ENTRY(112, "не закрытая кавычка"),
 		ERROR_ENTRY(113, "переполнения таблицы лексем"),
 		ERROR_ENTRY(114, "переполнения таблицы идентификаторов"),
 		ERROR_ENTRY(115, "нераспозноная лексема"),
@@ -55,8 +55,9 @@ namespace Error
 		ERROR_ENTRY(602, "Ошибка в выражении"),
 		ERROR_ENTRY(603, "ошибка в парамметрах фнкции"),
 		ERROR_ENTRY(604, "ошибка в парамметрах вызываемой фнкции"),
+		ERROR_ENTRY(605, "синтаксический анализ не пройден"),
 
-		ERROR_ENTRY_NODEF(605), ERROR_ENTRY_NODEF(606), ERROR_ENTRY_NODEF(607), ERROR_ENTRY_NODEF(608), ERROR_ENTRY_NODEF(609),
+		ERROR_ENTRY_NODEF(606), ERROR_ENTRY_NODEF(607), ERROR_ENTRY_NODEF(608), ERROR_ENTRY_NODEF(609),
 		ERROR_ENTRY_NODEF10(620), ERROR_ENTRY_NODEF10(630), ERROR_ENTRY_NODEF10(640), ERROR_ENTRY_NODEF10(650),
 		ERROR_ENTRY_NODEF10(660), ERROR_ENTRY_NODEF10(670), ERROR_ENTRY_NODEF10(680), ERROR_ENTRY_NODEF10(690),
 

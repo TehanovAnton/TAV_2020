@@ -3,10 +3,6 @@
 includelib kernel32.lib
 includelib msvcrt.lib
 
-WriteConsoleA PROTO : SDWORD, : SDWORD, : SDWORD, : SDWORD, : SDWORD
-SetConsoleTitleA PROTO : SDWORD
-GetStdHandle PROTO : SDWORD
-
 .code
 
 int_to_char PROC uses eax ebx ecx edi esi,
@@ -43,32 +39,4 @@ write:
 	loop write
 	ret
 int_to_char ENDP
-
-printconsole PROC uses eax ebx ecx edi esi,
-	pstr :sdword,
-	ptitle :sdword
-
-	push ptitle
-	call SetConsoleTitleA
-
-	push -11
-	call GetStdHandle
-
-	mov esi, pstr
-	mov edi, -1
-
-count:
-	inc edi
-	cmp sbyte ptr [esi + edi], 0
-	jne count
-
-	push 0
-	push 0
-	push edi
-	push pstr
-	push eax
-	call WriteConsoleA
-
-	ret
-printconsole ENDP
 end

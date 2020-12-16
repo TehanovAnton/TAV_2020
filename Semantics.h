@@ -1,7 +1,7 @@
 #pragma once
 #include"LT.h"
 #include"IT.h"
-#include<queue>
+#include<stack>
 
 #define MAXTYPENUMBER 3
 #define OPERNUM 10
@@ -47,7 +47,7 @@ namespace SMTCS
 		void CheckIF_RIF_Semantics();
 		bool CheckIdUsageAtLeasOnce();
 
-		bool CheckFunctionParms(std::queue<IT::IDDATATYPE> types, int indx);
+		bool CheckFunctionParms(std::stack<IT::IDDATATYPE> types, int indx);
 		bool Check_Assigment_DataTypes(IT::IDDATATYPE type, int indx);
 		bool Check_O_DataTypes(char sep, int strtIndx);
 		IT::IDDATATYPE Get_O_retType(char oper);

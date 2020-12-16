@@ -2,13 +2,25 @@
 
 namespace AsmGen
 {
+	bool Gen::IsProto(int i)
+	{
+		int e = i + 1;
+		for (; lextable.table[e].lexema[0] != LEX_DEFF; e++)
+		{
+			if (lextable.table[e].lexema[0] == LEX_END)
+				break;
+		}
+
+		return lextable.table[e].lexema[0] == LEX_DEFF ? true : false;
+	}
+
 	void Gen::GenPut(int& i)
 	{
 		IT::IDDATATYPE outLexDatatype = idtable.table[lextable.table[++i].idxTI].iddatatype;
 		if (outLexDatatype == IT::IDDATATYPE::BOOL || outLexDatatype == IT::IDDATATYPE::INT)
 		{
 			outFile << "\tpush " << idtable.table[lextable.table[i].idxTI].id << idtable.table[lextable.table[i].idxTI].vsbAr.aB << idtable.table[lextable.table[i].idxTI].vsbAr.aE << '\n';
-			outFile << "cld\n\tmov edi, offset result\n\tmov ecx, 100\n\tsub al, al\n\trep stosb\n";
+			outFile << "\tcld\n\tmov edi, offset result\n\tmov ecx, 100\n\tsub al, al\n\trep stosb\n";
 			outFile << "\tpush offset result" << '\n';				  
 			outFile << "\tcall int_to_char\n";
 			
@@ -67,10 +79,21 @@ namespace AsmGen
 		i++;
 		for (; lextable.table[i].lexema[0] != LEX_SEMICOLON; i++)
 		{
-			if (lextable.table[i].lexema[0] == 'i')			   // добавление в стек идентификаторов
-				outFile << "\tpush " << idtable.table[lextable.table[i].idxTI].id << "\n";
-
-			if (lextable.table[i].lexema[0] == 'l')			   // добавление в стек литералов
+			if (lextable.table[i].lexema[0] == LEX_ID)			   // добавление в стек идентификаторов
+			{
+				if (idtable.table[lextable.table[i].idxTI].idtype == IT::IDTYPE::V)
+				{
+					outFile << "\tpush " << idtable.table[lextable.table[i].idxTI].id << idtable.table[lextable.table[i].idxTI].vsbAr.aB << idtable.table[lextable.table[i].idxTI].vsbAr.aE << "\n";
+				}
+				else
+				{
+					if (idtable.table[lextable.table[i].idxTI].iddatatype == IT::IDDATATYPE::STR && idtable.table[lextable.table[i].idxTI].idtype == IT::IDTYPE::L)
+						outFile << "\tpush offset " << idtable.table[lextable.table[i].idxTI].id << '\n';
+					else
+						outFile << "\tpush " << idtable.table[lextable.table[i].idxTI].id << '\n';
+				}
+			}
+			if (lextable.table[i].lexema[0] == LEX_LITERAL)			   // добавление в стек литералов
 			{
 				if (idtable.table[lextable.table[i].idxTI].iddatatype == IT::IDDATATYPE::STR)
 					outFile << "\tpush offset " << idtable.table[lextable.table[i].idxTI].id << "\n";
@@ -100,14 +123,14 @@ namespace AsmGen
 				if (lextable.table[i].oper_v == LEX_MOREEQ_OPER_V)	    // >=
 				{
 					outFile << "cmp eax,ebx\n";
-					outFile << "\tjae is" << lextable.table[elslex].sn << lextable.table[elslex].cn << "\n";
+					outFile << "\tjge is" << lextable.table[elslex].sn << lextable.table[elslex].cn << "\n";
 					outFile << "\tjmp els" << lextable.table[elslex].sn << lextable.table[elslex].cn << "\n";
 					outFile << "is" << lextable.table[elslex].sn << lextable.table[elslex].cn << ":\n";
 				}
 				if (lextable.table[i].oper_v == LEX_LESSEQ_OPER_V)	    // <=
 				{
 					outFile << "cmp eax,ebx\n";
-					outFile << "\tjbe is" << lextable.table[elslex].sn << lextable.table[elslex].cn << "\n";
+					outFile << "\tjle is" << lextable.table[elslex].sn << lextable.table[elslex].cn << "\n";
 					outFile << "\tjmp els" << lextable.table[elslex].sn << lextable.table[elslex].cn << "\n";
 					outFile << "is" << lextable.table[elslex].sn << lextable.table[elslex].cn << ":\n";
 				}
@@ -163,7 +186,7 @@ namespace AsmGen
 					{
 						outFile << "\tpop ebx\n";
 						outFile << "\tpop eax\n";
-						
+
 						if (lextable.table[i].oper_v == '+')		  // достать из стека, сложить
 							outFile << "\tadd eax, ebx\n";
 
@@ -174,10 +197,26 @@ namespace AsmGen
 							outFile << "\tcdq\tmul ebx\n";
 
 						if (lextable.table[i].oper_v == '/')	    // достать из стека, перемножить
+						{
+							outFile << "\tcmp ebx, 0\n";
+							outFile << "\tje Error" << lextable.table[i].sn << lextable.table[i].cn << "\n";
+							outFile << "\tjmp isnt" << lextable.table[i].sn << lextable.table[i].cn << "\n";
+							outFile << "\tError" << lextable.table[i].sn << lextable.table[i].cn << ":\n";
+							outFile << "\n\tpush offset divByZero\n\tcall printCons\n";
+							outFile << "\n\tisnt" << lextable.table[i].sn << lextable.table[i].cn << ":\n";
+
 							outFile << "\tcdq\n\tidiv ebx\n";
+						}
 
 						if (lextable.table[i].oper_v == '%')
 						{
+							outFile << "\tcmp ebx, 0\n";
+							outFile << "\tje Error" << lextable.table[i].sn << lextable.table[i].cn << "\n";
+							outFile << "\tjmp isnt" << lextable.table[i].sn << lextable.table[i].cn << "\n";
+							outFile << "\tError" << lextable.table[i].sn << lextable.table[i].cn << ":\n";
+							outFile << "\n\tpush offset divByZero\n\tcall printCons\n";
+							outFile << "\n\tisnt" << lextable.table[i].sn << lextable.table[i].cn << ":\n";
+
 							outFile << "\tcdq\n\tidiv ebx\n";
 							outFile << "mod" << lextable.table[i].sn << lextable.table[i].cn << ":\n";
 							outFile << "\tneg edx\n";
@@ -200,26 +239,6 @@ namespace AsmGen
 						{
 							outFile << "\tcmp eax,ebx\n";
 							outFile << "\tjl is" << lextable.table[i].sn << lextable.table[i].cn << "\n";
-							outFile << "\tmov eax, 0\n";
-							outFile << "\tjmp isnt" << lextable.table[i].sn << lextable.table[i].cn << "\n";
-							outFile << "is" << lextable.table[i].sn << lextable.table[i].cn << ":\n";;
-							outFile << "\tmov eax, 1\n";
-							outFile << "isnt" << lextable.table[i].sn << lextable.table[i].cn << ":\n";
-						}
-						if (lextable.table[i].oper_v == LEX_MOREEQ_OPER_V)	    // >=
-						{
-							outFile << "\tcmp eax,ebx\n";
-							outFile << "\tjge is" << lextable.table[i].sn << lextable.table[i].cn << "\n";
-							outFile << "\tmov eax, 0\n";
-							outFile << "\tjmp isnt" << lextable.table[i].sn << lextable.table[i].cn << "\n";
-							outFile << "is" << lextable.table[i].sn << lextable.table[i].cn << ":\n";
-							outFile << "\tmov eax, 1\n";
-							outFile << "isnt" << lextable.table[i].sn << lextable.table[i].cn << ":\n";
-						}
-						if (lextable.table[i].oper_v == LEX_LESSEQ_OPER_V)	    // <=
-						{
-							outFile << "\tcmp eax,ebx\n";
-							outFile << "\tjle is" << lextable.table[i].sn << lextable.table[i].cn << "\n";
 							outFile << "\tmov eax, 0\n";
 							outFile << "\tjmp isnt" << lextable.table[i].sn << lextable.table[i].cn << "\n";
 							outFile << "is" << lextable.table[i].sn << lextable.table[i].cn << ":\n";;
@@ -249,8 +268,11 @@ namespace AsmGen
 				BodyOf_IF(i);
 		}
 
-		if(!ELS)
-			outFile << "\tjmp continue" << lextable.table[ifLexInd].sn << lextable.table[ifLexInd].cn << "\n";
+		if (lextable.table[i].lexema[0] == LEX_ElS)
+			if (ELS)
+				outFile << "\tjmp continue" << lextable.table[preifLex].sn << lextable.table[preifLex].cn << "\n";
+			else
+				outFile << "\tjmp continue" << lextable.table[ifLexInd].sn << lextable.table[ifLexInd].cn << "\n";
 
 		if (!ELS)
 			outFile << "els" << lextable.table[ifLexInd].sn << lextable.table[ifLexInd].cn << ":\n";
@@ -267,57 +289,74 @@ namespace AsmGen
 			outFile << "continue" << lextable.table[preifLex].sn << lextable.table[preifLex].cn << ":\n";
 	}
 
-	void Gen::GenBoolExpresion_RIF(int& i)
+	void Gen::GenBoolExpresion_RIF(int& i, int riflex)
 	{
 		i++;
+		outFile << "RIF" << lextable.table[riflex].sn << lextable.table[riflex].cn << ":\n";
 		for (; lextable.table[i].lexema[0] != LEX_SEMICOLON; i++)
 		{
-			if (lextable.table[i].lexema[0] == 'i')			   // добавление в стек идентификаторов
-				outFile << "\tpush " << idtable.table[lextable.table[i].idxTI].id << "\n";
+			if (lextable.table[i].lexema[0] == LEX_ID)			   // добавление в стек идентификаторов
+			{
+				if (idtable.table[lextable.table[i].idxTI].idtype == IT::IDTYPE::V)
+				{
+					outFile << "\tpush " << idtable.table[lextable.table[i].idxTI].id << idtable.table[lextable.table[i].idxTI].vsbAr.aB << idtable.table[lextable.table[i].idxTI].vsbAr.aE << "\n";
+				}
+				else
+				{
+					if (idtable.table[lextable.table[i].idxTI].iddatatype == IT::IDDATATYPE::STR && idtable.table[lextable.table[i].idxTI].idtype == IT::IDTYPE::L)
+						outFile << "\tpush offset " << idtable.table[lextable.table[i].idxTI].id << '\n';
+					else
+						outFile << "\tpush " << idtable.table[lextable.table[i].idxTI].id << '\n';
+				}
+			}
 
-			if (lextable.table[i].lexema[0] == 'l')			   // добавление в стек литералов
-				outFile << "\tpush offset " << idtable.table[lextable.table[i].idxTI].id << "\n";
+			if (lextable.table[i].lexema[0] == LEX_LITERAL)			   // добавление в стек литералов
+			{
+				if (idtable.table[lextable.table[i].idxTI].iddatatype == IT::IDDATATYPE::STR)
+					outFile << "\tpush offset " << idtable.table[lextable.table[i].idxTI].id << "\n";
+				else
+					outFile << "\tpush " << idtable.table[lextable.table[i].idxTI].id << "\n";
+			}
 
 			if (lextable.table[i].lexema[0] == 'v' || lextable.table[i].lexema[0] == 'w')
 			{										
-				outFile << "RIF" << lextable.table[i].sn << lextable.table[i].cn << ":\n";
 				outFile << "\tpop ebx\n";
 				outFile << "\tpop eax\n";
 
 				if (lextable.table[i].oper_v == '>')	    // >
 				{
 					outFile << "cmp eax,ebx\n";
-					outFile << "\tjg is" << lextable.table[i].sn << lextable.table[i].cn << "\n";
-					outFile << "\tjmp continue" << lextable.table[i].sn << lextable.table[i].cn << ":\n";
-					outFile << "is" << lextable.table[i].sn << lextable.table[i].cn << ":\n";
+					outFile << "\tjg is" << lextable.table[riflex].sn << lextable.table[riflex].cn << "\n";
+					outFile << "\tjmp continue" << lextable.table[riflex].sn << lextable.table[riflex].cn << "\n";
+					outFile << "is" << lextable.table[riflex].sn << lextable.table[riflex].cn << ":\n";
 				}
 				if (lextable.table[i].oper_v == '<')	    // <
 				{
 					outFile << "cmp eax,ebx\n";
-					outFile << "\tjl is" << lextable.table[i].sn << lextable.table[i].cn << "\n";
-					outFile << "\tjmp continue" << lextable.table[i].sn << lextable.table[i].cn << ":\n";
-					outFile << "is" << lextable.table[i].sn << lextable.table[i].cn << ":\n";
+					outFile << "\tjl is" << lextable.table[riflex].sn << lextable.table[riflex].cn << "\n";
+					outFile << "\tjmp continue" << lextable.table[riflex].sn << lextable.table[riflex].cn << "\n";
+					outFile << "is" << lextable.table[riflex].sn << lextable.table[riflex].cn << ":\n";
 				}
 				if (lextable.table[i].oper_v == LEX_MOREEQ_OPER_V)	    // >=
 				{
 					outFile << "cmp eax,ebx\n";
-					outFile << "\tjge is" << lextable.table[i].sn << lextable.table[i].cn << "\n";
-					outFile << "\tjmp continue" << lextable.table[i].sn << lextable.table[i].cn << ":\n";
-					outFile << "is" << lextable.table[i].sn << lextable.table[i].cn << ":\n";
+					outFile << "\tjge is" << lextable.table[riflex].sn << lextable.table[riflex].cn << "\n";
+					outFile << "\tjmp continue" << lextable.table[riflex].sn << lextable.table[riflex].cn << "\n";
+					outFile << "is" << lextable.table[riflex].sn << lextable.table[riflex].cn << ":\n";
 				}
 				if (lextable.table[i].oper_v == LEX_LESSEQ_OPER_V)	    // <=
 				{
 					outFile << "cmp eax,ebx\n";
-					outFile << "\tjle is" << lextable.table[i].sn << lextable.table[i].cn << "\n";
-					outFile << "\tjmp continue" << lextable.table[i].sn << lextable.table[i].cn << ":\n";
-					outFile << "is" << lextable.table[i].sn << lextable.table[i].cn << ":\n";
+					outFile << "\tjle is" << lextable.table[riflex].sn << lextable.table[riflex].cn << "\n";
+					outFile << "\tjmp continue" << lextable.table[i].sn << lextable.table[riflex].cn << "\n";
+					outFile << "is" << lextable.table[riflex].sn << lextable.table[riflex].cn << ":\n";
 				}
 				if (lextable.table[i].oper_v == LEX_BOOLEAQUl_OPER_V)	    // ==
 				{
 					outFile << "\tcmp eax,ebx\n";
-					outFile << "\tje is" << lextable.table[i].sn << lextable.table[i].cn << "\n";
-					outFile << "\tjmp continue" << lextable.table[i].sn << lextable.table[i].cn << ":\n";
-					outFile << "is" << lextable.table[i].sn << lextable.table[i].cn << ":\n";
+					outFile << "\tje is" << lextable.table[riflex].sn << lextable.table[riflex].cn << "\n";
+					outFile << "\tjmp continue" << lextable.table[riflex].sn << lextable.table[riflex].cn << "\n";
+					outFile << "is" << lextable.table[riflex].sn << lextable.table[riflex].cn << ":\n";
 				}
 			}
 		}
@@ -327,7 +366,7 @@ namespace AsmGen
 		int indOflex = -1;
 		int rifLexInd = i;
 
-		GenBoolExpresion_RIF(i);
+		GenBoolExpresion_RIF(i, rifLexInd);
 
 		for (; lextable.table[i].lexema[0] != LEX_END; i++)
 		{
@@ -338,11 +377,28 @@ namespace AsmGen
 				i++;
 				for (; lextable.table[i].lexema[0] != LEX_SEMICOLON; i++)
 				{
-					if (lextable.table[i].lexema[0] == 'i')			   // добавление в стек идентификаторов
-						outFile << "\tpush " << idtable.table[lextable.table[i].idxTI].id << "\n";
+					if (lextable.table[i].lexema[0] == LEX_ID)			   // добавление в стек идентификаторов
+					{
+						if (idtable.table[lextable.table[i].idxTI].idtype == IT::IDTYPE::V)
+						{
+							outFile << "\tpush " << idtable.table[lextable.table[i].idxTI].id << idtable.table[lextable.table[i].idxTI].vsbAr.aB << idtable.table[lextable.table[i].idxTI].vsbAr.aE << "\n";
+						}
+						else
+						{
+							if (idtable.table[lextable.table[i].idxTI].iddatatype == IT::IDDATATYPE::STR && idtable.table[lextable.table[i].idxTI].idtype == IT::IDTYPE::L)
+								outFile << "\tpush offset " << idtable.table[lextable.table[i].idxTI].id << '\n';
+							else
+								outFile << "\tpush " << idtable.table[lextable.table[i].idxTI].id << '\n';
+						}
+					}
 
-					if (lextable.table[i].lexema[0] == 'l')			   // добавление в стек литералов
-						outFile << "\tpush offset " << idtable.table[lextable.table[i].idxTI].id << "\n";
+					if (lextable.table[i].lexema[0] == LEX_LITERAL)			   // добавление в стек литералов
+					{
+						if (idtable.table[lextable.table[i].idxTI].iddatatype == IT::IDDATATYPE::STR)
+							outFile << "\tpush offset " << idtable.table[lextable.table[i].idxTI].id << "\n";
+						else
+							outFile << "\tpush " << idtable.table[lextable.table[i].idxTI].id << "\n";
+					}
 
 					if (isSymInStr(lextable.table[i].lexema[0], JUSTNUBERS))					 // вызов функции
 					{
@@ -413,7 +469,7 @@ namespace AsmGen
 							outFile << "\tjle is" << lextable.table[i].sn << lextable.table[i].cn << "\n";
 							outFile << "\tmov eax, 0\n";
 							outFile << "\tjmp isnt" << lextable.table[i].sn << lextable.table[i].cn << "\n";
-							outFile << "is" << lextable.table[i].sn << lextable.table[i].cn << ":\n";;
+							outFile << "is" << lextable.table[i].sn << lextable.table[i].cn << ":\n";
 							outFile << "\tmov eax, 1\n";
 							outFile << "isnt" << lextable.table[i].sn << lextable.table[i].cn << ":\n";
 						}
@@ -430,7 +486,7 @@ namespace AsmGen
 						outFile << "\tpush eax\n";
 					}
 				}
-				outFile << "\tpop " << idtable.table[lextable.table[indOflex].idxTI].id << "\n\n"; // присвоение значения
+				outFile << "\tpop " << idtable.table[lextable.table[indOflex].idxTI].id << idtable.table[lextable.table[indOflex].idxTI].vsbAr.aB << idtable.table[lextable.table[indOflex].idxTI].vsbAr.aE << "\n\n";
 			}
 
 			if (lextable.table[i].lexema[0] == LEX_PUT)
@@ -443,12 +499,12 @@ namespace AsmGen
 				BodyOf_RIF(i);
 		}
 
-		outFile << "jmp RIF" << lextable.table[rifLexInd].sn << lextable.table[rifLexInd].cn << ":\n";
+		outFile << "jmp RIF" << lextable.table[rifLexInd].sn << lextable.table[rifLexInd].cn << "\n";
 		outFile << "continue" << lextable.table[rifLexInd].sn << lextable.table[rifLexInd].cn << ":\n";
 	}
 	void Gen::BodyOfFunctions(char* funcProcName, int& indOflex, int& i)
 	{
-		for (; lextable.table[i].lexema[0] != LEX_END; i++)
+		for (; lextable.table[i].lexema[0] != LEX_END && lextable.table[i].lexema[0] != LEX_DEFF; i++)
 		{
 			// присваевание
 			if (lextable.table[i].lexema[0] == '=')
@@ -457,7 +513,7 @@ namespace AsmGen
 				i++;
 				for (; lextable.table[i].lexema[0] != LEX_SEMICOLON; i++)
 				{
-					if (lextable.table[i].lexema[0] == 'i')			   // добавление в стек идентификаторов
+					if (lextable.table[i].lexema[0] == LEX_ID)			   // добавление в стек идентификаторов
 					{
 						if (idtable.table[lextable.table[i].idxTI].idtype == IT::IDTYPE::V)
 						{						
@@ -472,7 +528,7 @@ namespace AsmGen
 						}
 					}
 
-					if (lextable.table[i].lexema[0] == 'l')			   // добавление в стек литералов
+					if (lextable.table[i].lexema[0] == LEX_LITERAL)			   // добавление в стек литералов
 					{
 						if (idtable.table[lextable.table[i].idxTI].iddatatype == IT::IDDATATYPE::STR)
 							outFile << "\tpush offset " << idtable.table[lextable.table[i].idxTI].id << "\n";
@@ -582,7 +638,14 @@ namespace AsmGen
 			{
 				if (!startPoint)
 				{
-					outFile << "\tmov eax," << idtable.table[lextable.table[++i].idxTI].id << '\n';
+					if (idtable.table[lextable.table[++i].idxTI].idtype == IT::IDTYPE::V)
+						outFile << "\tmov eax," << idtable.table[lextable.table[i].idxTI].id << idtable.table[lextable.table[i].idxTI].vsbAr.aB << idtable.table[lextable.table[i].idxTI].vsbAr.aE << "\n";
+					else if (idtable.table[lextable.table[i].idxTI].idtype == IT::IDTYPE::L)
+						if(idtable.table[lextable.table[i].idxTI].iddatatype == IT::IDDATATYPE::STR)
+							outFile << "\tmov eax, offset " << idtable.table[lextable.table[i].idxTI].id << "\n";
+						else
+							outFile << "\tmov eax, " << idtable.table[lextable.table[i].idxTI].id << "\n";
+
 					outFile << "\tret" << '\n';
 				}
 				else
@@ -755,7 +818,6 @@ namespace AsmGen
 		outFile << ".586\n";
 		outFile << "\t.model flat, stdcall\n";
 		outFile << "\tincludelib libucrt.lib\n";
-		outFile << "\tincludelib libucrt.lib\n";
 		outFile << "\tincludelib kernel32.lib\n";
 		outFile << "\tExitProcess PROTO :SDWORD\n\n";
 		outFile << "\tincludelib ..\\Debug\\TAV_2020_standartLibary.lib\n";
@@ -765,10 +827,8 @@ namespace AsmGen
 		outFile << "\tSetConsoleTitleA PROTO : SDWORD\n";
 		outFile << "\tGetStdHandle PROTO : SDWORD\n";
 		outFile << "\tprintconsole PROTO : SDWORD, : SDWORD\n";
-		outFile << "\tint_to_char PROTO : SDWORD, : SDWORD\n\n";
 
-		outFile << "\tconca PROTO : SDWORD, : SDWORD\n";		// заголовки функций из стандартонй библиотеки
-		outFile << "\tcompa PROTO : SDWORD, : SDWORD\n";
+		outFile << "\tint_to_char PROTO : SDWORD, : SDWORD\n\n";	 
 		outFile << "\printCons PROTO : SDWORD\n";
 
 		outFile << "\n.stack 4096\n";
@@ -800,14 +860,10 @@ namespace AsmGen
 			{
 				
 				outFile << "\t" << idtable.table[i].id << idtable.table[i].vsbAr.aB << idtable.table[i].vsbAr.aE; // имя переменной плюс область видимости
-				if (idtable.table[i].iddatatype == IT::IDDATATYPE::STR || idtable.table[i].iddatatype == IT::IDDATATYPE::INT)
-					{ outFile << " SDWORD ?\n"; continue; }
-				if (idtable.table[i].iddatatype == IT::IDDATATYPE::BOOL)
-				{ outFile << " SBYTE ?\n"; continue; }
+				outFile << " SDWORD ?\n"; continue;
 				outFile << '\n';
 			}
 		}
-		outFile << "\tConsoleTitle SBYTE \"Console\",0\n";
 		outFile << "\tresult SBYTE 100 dup(0)\n";
 	}
 	void Gen::AssemblerCode()
@@ -831,9 +887,17 @@ namespace AsmGen
 		{
 			if (lextable.table[i].lexema[0] == LEX_DEFF)
 			{
+				if (IsProto(i))
+					continue;
+
 				int indOfProc = i += 2;						// инlекс имени ф.
 				outFile << idtable.table[lextable.table[i].idxTI].id << " PROC ";		  // генерация заголовков пользовательских функций
-				for (; lextable.table[i].lexema[0] != LEX_RIGHTHESIS; i++)
+
+				int e = i;
+				for (; lextable.table[e].lexema[0] != LEX_RIGHTHESIS; )
+					e++;
+
+				for (i = e; lextable.table[i].lexema[0] != LEX_LEFTHESIS; i--)
 				{
 					if (lextable.table[i].lexema[0] == 't')
 					{
@@ -848,12 +912,14 @@ namespace AsmGen
 						{
 							outFile << idtable.table[lextable.table[i].idxTI].id << ":SBYTE";
 						}
-						if (lextable.table[i + 1].lexema[0] == LEX_COMMA)
+						if (lextable.table[i - 2].lexema[0] == LEX_COMMA)
 							outFile << LEX_COMMA << ' ';
-						else if (lextable.table[i + 1].lexema[0] == LEX_RIGHTHESIS)
+						else if (lextable.table[i - 2].lexema[0] == LEX_LEFTHESIS)
 							outFile << '\n';
+						--i;
 					}
 				}
+				i = e;
 				BodyOfFunctions(idtable.table[lextable.table[indOfProc].idxTI].id, indOfProc, i);
 			}
 		}

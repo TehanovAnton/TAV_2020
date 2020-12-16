@@ -1,38 +1,36 @@
-defF IntT fi(IntT x, IntT y)
-	defF IntT la(IntT x, IntT y)
-	RIF(la(x, y) > 2)
-	 def IntT l = 3
-	 put l
-	end
-	def IntT j = 1
-	def IntT l = 1
-	def IntT z = x * ( x + y )
-	ret z
+defF IntT strle(StrT s)
+defF StrT strsu(StrT s, IntT b, IntT e)
+defF BoolT strca(StrT s, StrT z)
+defF StrT fstandlib(StrT s)
+	def IntT b = strle(s) - 3
+	def StrT a = strsu(s, 0, b)
+	def BoolT res = strca(s, a)
+	put 'res =>'
+	put res
+	ret ' '
 end
-defF StrT fs(StrT a, StrT b)
-	def  StrT c
-	defF StrT substr(StrT a, IntT b, IntT c)
-	c = substr(a, 1, 3) + b
-	ret c
+defF IntT conditionaloperator(IntT x, IntT y)
+	IF(x < 0fhm)
+		put 'x less then 0fhm'
+	ELS
+		put 'x isnt less then 0fhm'
+		IF(y >= 10o)
+			put 'y more or equal 10o'
+		end
+	end
+	ret 0
+end
+defF IntT arithmeticoperations(IntT x, StrT y)
+	def IntT res = (x*10 - 5)/strle(y)
+	ret res
 end
 defF StartPoint
-	def IntT x = 1
-	def IntT y = 1
-	def IntT z
-	def StrT sa
-	def StrT sb
-	def StrT sc
-	defF IntT strlen(StrT p)
-	x = 1
-	y = 5
-	sa = '1234567890'
-	sb = '1234567890'
-	z = fi(x, y)
-	sc = fs(sa, sb)
-	put 'контрльный        пример'
-        put z
-        put sc
-	put strlen(sc)
-	ret 0
+	def IntT firstres = conditionaloperator(20, 10o)
+        def IntT secondres = arithmeticoperations(4, 'anton')
+	def StrT i = fstandlib('antonTehanov')
+	RIF(secondres >= 0)
+		secondres = secondres - 1
+		put secondres
+	end
 	ret 0
 end

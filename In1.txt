@@ -1,5 +1,5 @@
 defF IntT f(IntT e)
-  def IntT k = 0xee
+  def IntT k = 0eeh
   def BoolT r = true
   r = false
   RIF(e > 1)

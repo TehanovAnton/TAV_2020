@@ -55,15 +55,17 @@ namespace GRB				// S N E M F W Y Z
 			Rule::Chain(6, TS('i'), TS('('), NS('W'), TS(')'), TS(';'), NS('N')),
 			Rule::Chain(5, TS('i'), TS('('), NS('W'), TS(')'), TS(';'))
 		),
-		//E -> i | l | (E) | iM | lM | (E)M | i(W)M | Z
+		//E -> i | l | (E) | iM | lM | (E)M | i(W)M | i(W) | Z
 		Rule(NS('E'), GRB__ERROR_SERIES + 2,
-			6,											 
+			8,											 
 			Rule::Chain(1, TS('i')),
 			Rule::Chain(1, TS('l')),
 			Rule::Chain(3, TS('('), NS('E'), TS(')')),
 			Rule::Chain(2, TS('i'), NS('M')),
 			Rule::Chain(2, TS('l'), NS('M')),
-			Rule::Chain(4, TS('('), NS('E'), TS(')'), NS('M'))					
+			Rule::Chain(4, TS('('), NS('E'), TS(')'), NS('M')),					
+			Rule::Chain(5, TS('i'), TS('('), NS('W'), TS(')'), NS('M')),
+			Rule::Chain(4, TS('i'), TS('('), NS('W'), TS(')'))
 		),
 		//M -> vE |  v(E) | vEM
 		Rule(NS('M'), GRB__ERROR_SERIES + 3,

@@ -1,46 +1,36 @@
-proc strtype concat(strtype s,strtype s)
-proc inttype compa(strtype s,strtype s)
-proc inttype conditionaloperator(inttype x,inttype y)
-def strtype res=concat('a','l')
-def inttype r=compa('a','l')
-def inttype w=5 % 3
-if(x<y)
-out 'x less then y'
-else
-out 'x more then y'
+defF IntT strle(StrT s)
+defF StrT strsu(StrT s,IntT b,IntT e)
+defF BoolT strca(StrT s,StrT z)
+defF StrT fstandlib(StrT s)
+def IntT b=strle(s)-3
+def StrT a=strsu(s,0,b)
+def BoolT res=strca(s,a)
+put 'res =>:'
+put res
+ret ' '
 end
-if(x>y)
-out 'x more then y'
-else
-out 'x less then y'
+defF IntT conditionaloperator(IntT x,IntT y)
+IF(x<0fhm)
+put 'x less then 0fhm'
+ELS
+put 'x isnt less then 0fhm'
+IF(y>=10o)
+put 'y more or equal 10o'
+end
 end
 ret 0
 end
-proc inttype arithmeticoperations(inttype x,inttype y)
-def inttype add=0ah+1h
-out add
-def inttype sub=x-y
-out sub
-def inttype mult=x*y
-out mult
-def inttype div=0dh/2h
-out div
-def inttype modulo=x % y
-out modulo
-ret 0
+defF IntT arithmeticoperations(IntT x,StrT y)
+def IntT res=(x*10-5)/strle(y)
+ret res
 end
-proc strtype fstandlib(strtype s)
-def strtype scnct=concat(s,s)
-out 'strings concatenation:'
-out scnct
-def inttype scmpr=compare(s,'l')
-out 'string comparison:'
-out scmpr
-ret 0
+defF StartPoint
+def IntT firstres=conditionaloperator(20,10o)
+def IntT secondres=arithmeticoperations(4,'anton')
+def StrT i=fstandlib('antonTehanov')
+RIF(secondres>=0)
+secondres=secondres-1
+put secondres
 end
-proc StartPoint
-def inttype firstres=conditionaloperator(1,2)
-def inttype secondres=arithmeticoperations(2,7)
-def inttype i=fstandlib('andrewtehanov')
 ret 0
 end

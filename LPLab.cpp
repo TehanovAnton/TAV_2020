@@ -12,8 +12,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	setlocale(LC_ALL, "rus");
 	Log::LOG log = Log::INITLOG;
 	try
-	{		
-#if LPLab
+	{
 		Parm::PARM parm = Parm::getparm(argc, argv);
 		std::wcout << "-in:" << parm.in << ", -out:" << parm.out << ", log:" << parm.log << std::endl << std::endl;
 
@@ -63,10 +62,11 @@ int _tmain(int argc, _TCHAR* argv[])
 
 
 		////LPLab16
-		MFST_TRACE_START											   // отладка
-		MFST::Mfst mfst(lexTable, GRB::getGreibach());			   // автомат
-		mfst.start();												   // старт синтаксического анализа
-		mfst.printrules();
+		//MFST_TRACE_START											   // отладка
+		//MFST::Mfst mfst(lexTable, GRB::getGreibach());			   // автомат
+		//if (!mfst.start())												   // старт синтаксического анализа
+		//	throw ERROR_THROW_IN(605, -1, -1)
+		//mfst.printrules();
 
 		////LPLab15
 		exposingNamespaces(lexTable, idTable);
@@ -88,8 +88,6 @@ int _tmain(int argc, _TCHAR* argv[])
 		// генерация кода
 		AsmGen::Gen generrator(lexTable, idTable, TAVasmOutFile);
 		Log::Close(log);
-
-#endif // LPLab
 	}
 	catch (Error::ERROR e)
 	{

@@ -2,7 +2,7 @@
 #include<stdio.h>
 extern "C"
 {
-	int _stdcall compa(char* str1, char* str2)
+	int _stdcall strca(char* str1, char* str2)
 	{
 		bool res = false;
 		int len1 = strlen(str1);
@@ -14,6 +14,30 @@ extern "C"
 		}
 
 		return res;
+	}
+
+	int _stdcall strle(char* str)
+	{
+		return strlen(str);
+	}
+
+	char* _stdcall strsu(int e, int b, char* str)
+	{
+		char* buffer = reinterpret_cast<char*>(calloc(e - b + 2, sizeof(char)));
+
+		if (buffer == nullptr && (b > e || b < 0 || e < 0))
+		{
+			buffer = reinterpret_cast<char*>(calloc(1, sizeof(char)));
+			buffer[0] = '\0';
+			return buffer;
+		}
+
+		int k = 0;
+		for (int i = b; i <= e && i < strlen(str); ++i, ++k)
+			buffer[k] = str[i];
+
+		buffer[k] = '\0';
+		return buffer;
 	}
 
 	void _stdcall printCons(char* str)
